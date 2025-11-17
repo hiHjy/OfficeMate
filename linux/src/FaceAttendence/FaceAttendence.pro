@@ -1,4 +1,4 @@
-QT       += core gui multimedia multimediawidgets
+QT       += core gui multimedia multimediawidgets sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,16 +22,21 @@ INCLUDEPATH += /opt/opencv4.5.2/include/opencv4
 #添加opencv，seetace的库
 LIBS += -L/opt/opencv4.5.2/lib -lopencv_world
 SOURCES += \
+    databasemannager.cpp \
     face_api.cpp \
     main.cpp \
-    faceattendence.cpp
+    faceattendence.cpp \
+    register.cpp
 
 HEADERS += \
+    databasemannager.h \
     face_api.h \
-    faceattendence.h
+    faceattendence.h \
+    register.h
 
 FORMS += \
-    faceattendence.ui
+    faceattendence.ui \
+    register.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

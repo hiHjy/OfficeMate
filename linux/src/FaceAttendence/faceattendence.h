@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <opencv.hpp>
 #include <QThread>
+#include "databasemannager.h"
 using namespace cv;
 
 QT_BEGIN_NAMESPACE
@@ -37,7 +38,7 @@ public:
     void updateFrame();
     static FaceAttendence *getInstance();
 signals:
-    void sigFaceVerified(QString userName);
+    void sigFaceVerified(UserInfo user);
 private:
     Ui::FaceAttendence *ui;
     VideoCapture cap;

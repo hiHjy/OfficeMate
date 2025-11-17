@@ -8,7 +8,11 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "faceattendence.h"
-void faceSearch(QString base64Image, QString token);
+int faceSearch(QString base64Image, QString token);
+void faceRegister(QString base64Image, QString token,
+                  QString name, QString workId,
+                  QString identity, QString imgPath);
 void getAccessToken(std::function<void(QString)> callback);
+extern QString global_token;
 
 #endif // FACE_API_H

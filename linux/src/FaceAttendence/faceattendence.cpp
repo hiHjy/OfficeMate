@@ -7,7 +7,7 @@
 #include <QByteArray>
 #include "face_api.h"
 
-QString global_token;
+
 FaceAttendence* FaceAttendence::self = nullptr;
 
 FaceAttendence::FaceAttendence(QWidget *parent)
@@ -17,6 +17,13 @@ FaceAttendence::FaceAttendence(QWidget *parent)
     ui->setupUi(this);
     self = this;
     ui->widget_2->hide();
+
+    DatabaseManager *db = DatabaseManager::getInstance();
+    if (!db->initDataBase()) {
+        qDebug() << "initDataBase error" << endl;
+    }
+
+
     cap.open("/dev/video0");
     //startTimer(100);
 
@@ -54,13 +61,27 @@ FaceAttendence::FaceAttendence(QWidget *parent)
         //faceSearch(jpgBase64, global_token);
     });
     connect(face_dect, &Work::sigFaceReady, this, [=](QString base64) {
-            faceSearch(base64, global_token);
+        faceSearch(base64, global_token);
     });
 
-    connect(this, &FaceAttendence::sigFaceVerified, this, [=](QString name){
+    connect(this, &FaceAttendence::sigFaceVerified, this, [=](UserInfo user){
         //ui->widget_2->setText("认证成功：" + name);
-        ui->widget2->show();
-        qDebug() << "uid:" << name << endl;
+        ui->widget_2->show();
+        if (!user.valid) {
+            qDebug() << "User not found. The user may not be registered" << endl;
+
+        } else {
+
+
+            qDebug() << "识别成功：";
+            qDebug() << "姓名:" << user.name;
+            qDebug() << "工号:" << user.workId;
+            qDebug() << "身份:" << user.identity;
+            ui->LE_Name->setText(user.name);
+            ui->LE_Work_ID->setText(user.workId);
+            ui->LE_identity->setText(user.identity);
+        }
+
     });
 
 
@@ -134,20 +155,20 @@ void Work::run()
         //faceSearch(jpgBase64, global_token);
         emit sigFaceReady(jpgBase64);
         // qDebug() << jpgBase64;
+        usleep(10000);
 
 
+        //        QString filename = QString("/home/hjy/Documents/linux-embed/qt/FaceAttendence/capture.jpg")
+        //              ;
+        //        QFile file(filename);
+        //        if (file.open(QIODevice::WriteOnly)) {
+        //            file.write((char*)buf.data(), buf.size());
+        //            file.close();
+        //            qDebug() << "保存图片:" << filename;
 
-//        QString filename = QString("/home/hjy/Documents/linux-embed/qt/FaceAttendence/capture.jpg")
-//              ;
-//        QFile file(filename);
-//        if (file.open(QIODevice::WriteOnly)) {
-//            file.write((char*)buf.data(), buf.size());
-//            file.close();
-//            qDebug() << "保存图片:" << filename;
-
-//            //✅ 下一步：把这个 JPG 文件传给你的人脸识别程序
-//            system(QString("./face %1").arg(filename).toStdString().c_str());
-//        }
+        //            //✅ 下一步：把这个 JPG 文件传给你的人脸识别程序
+        //            system(QString("./face %1").arg(filename).toStdString().c_str());
+        //        }
 
 
 

@@ -1,5 +1,6 @@
 #include "face_api.h"
-
+#include <QMessageBox>
+QString global_token = "";
 // 百度AI开放平台的API认证信息
 // client_id: 客户端ID，用于标识应用
 QString client_id = "EuabRmosANnliPgnNxB32rDt";
@@ -41,7 +42,8 @@ void getAccessToken(std::function<void(QString)> callback)
 
         // 从JSON文档中提取access_token字段的值
         QString token = doc["access_token"].toString();
-
+        global_token = token;
+        qDebug() << "token:" << global_token << endl;
         // 调用回调函数，将获取到的token传递给调用者
         callback(token);
 
@@ -56,7 +58,7 @@ void getAccessToken(std::function<void(QString)> callback)
 // 人脸搜索函数 - 在指定人脸库中搜索匹配的人脸
 // 参数: base64Image - Base64编码的人脸图片数据
 //        token - 访问令牌，用于API认证
-void faceSearch(QString base64Image, QString token)
+int faceSearch(QString base64Image, QString token)
 {
     // 创建网络访问管理器
     QNetworkAccessManager* manager = new QNetworkAccessManager;
@@ -78,7 +80,7 @@ void faceSearch(QString base64Image, QString token)
     // 图片类型：Base64编码
     json["image_type"] = "BASE64";
     // 要搜索的人脸库组ID列表，这里搜索组"11"
-    json["group_id_list"] = "11";
+    json["group_id_list"] = "default_group";
 
     // 将JSON对象转换为文档
     QJsonDocument doc(json);
@@ -104,11 +106,11 @@ void faceSearch(QString base64Image, QString token)
 
         qDebug() << "obj[\"error_code\"].toInt() " << obj["error_code"].toInt() << endl;
         if (obj["error_code"].toInt() == 0) {
-            auto user = obj["result"].toObject()["user_list"].toArray()[0].toObject();
-            QString name = user["user_id"].toString();
-            emit FaceAttendence :: getInstance()->sigFaceVerified(name);
+            auto user_id = obj["result"].toObject()["user_list"].toArray()[0].toObject()["user_id"].toString();
+            qDebug() << "user_id:" << user_id;
+            auto info = DatabaseManager::getInstance()->getInfoByUID(user_id);
+            emit FaceAttendence :: getInstance()->sigFaceVerified(info);
         }
-
 
         // 清理回复对象
         reply->deleteLater();
@@ -116,5 +118,46 @@ void faceSearch(QString base64Image, QString token)
 
     // 发送POST请求，将JSON数据作为请求体
     manager->post(request, doc.toJson());
+    return 0;
 
+}
+void faceRegister(QString base64Image, QString token,
+                  QString name, QString workId,
+                  QString identity, QString imgPath)
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager;
+    qDebug() << "faceRegister is called" << endl;
+    QNetworkRequest request(QUrl("https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add?access_token=" + token));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject params;
+    params["image"] = base64Image;
+    params["image_type"] = "BASE64";
+    params["group_id"] = "default_group";
+    params["user_id"] = workId;  // 可用工号当用户ID
+    params["user_info"] = name;
+
+    QNetworkReply* reply = manager->post(request, QJsonDocument(params).toJson());
+
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        QByteArray resp = reply->readAll();
+        QJsonObject obj = QJsonDocument::fromJson(resp).object();
+        //QString data = reply->readAll();
+        qDebug() << "faceRegister callback is called" << obj << endl;
+        int error = obj["error_code"].toInt();
+        if (error == 0) {
+
+            auto user_id = obj["result"].toObject()["user_list"].toArray()[0].toObject()["user_id"].toString();
+            //qDebug() << "----" << user_id << endl;
+            // 存数据库
+            DatabaseManager::getInstance()->insertPersonInfo(
+                workId, identity, workId, name, imgPath
+            );
+
+            QMessageBox::information(nullptr, "成功", "注册成功！");
+        } else {
+            QMessageBox::warning(nullptr, "错误", "注册失败：" + obj["error_msg"].toString());
+        }
+        reply->deleteLater();
+    });
 }

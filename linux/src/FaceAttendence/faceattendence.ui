@@ -204,7 +204,7 @@ QWidget#head_image{
     <widget class="QLabel" name="headline">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>0</y>
        <width>301</width>
        <height>61</height>
@@ -230,7 +230,7 @@ QWidget#head_image{
       <string/>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -268,7 +268,7 @@ QLineEdit {
 }
 </string>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -286,7 +286,7 @@ QLineEdit {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit">
+           <widget class="QLineEdit" name="LE_identity">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -294,7 +294,7 @@ QLineEdit {
              </sizepolicy>
             </property>
             <property name="text">
-             <string>202584060260</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -353,7 +353,7 @@ QLineEdit {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_4">
+           <widget class="QLineEdit" name="LE_Work_ID">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -361,7 +361,7 @@ QLineEdit {
              </sizepolicy>
             </property>
             <property name="text">
-             <string>202584060260</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -428,7 +428,7 @@ QLineEdit {
              </sizepolicy>
             </property>
             <property name="text">
-             <string>202584060260</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -486,7 +486,7 @@ QLineEdit {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_8">
+           <widget class="QLineEdit" name="LE_Name">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -494,7 +494,7 @@ QLineEdit {
              </sizepolicy>
             </property>
             <property name="text">
-             <string>202584060260</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
