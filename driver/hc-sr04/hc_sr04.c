@@ -8,12 +8,15 @@
 #include <linux/cdev.h>
 #include <linux/fs.h>
 #include <linux/device.h>
-#include <asm-generic/uaccess.h>
 #include <linux/gpio.h>
 #include <linux/of_gpio.h>
 #include <linux/ioport.h>
 #include <linux/platform_device.h>
-#include <linux/delay.h>      
+#include <linux/delay.h>
+#include <linux/irq.h>
+#include <linux/interrupt.h>
+#include <linux/wait.h>
+#include <asm-generic/uaccess.h>
 
 
 #define HC_SR04_CNT 1
@@ -27,9 +30,17 @@ static struct hc_sr04 {
 	struct class *class;
 	struct device *device;
 	struct device_node *nd; /*设备节点*/
+	int irq_echo;
 	int gpio_echo;
 	int gpio_trig;
-
+	struct tasklet_struct tasklet;
+	struct work_struct work;
+	wait_queue_head_t wq;
+	int data_ready;
+	u32 start_us;
+	u32 end_us;
+	u32 distance_cm;
+	
 } hc_sr04;
 
 
@@ -60,67 +71,39 @@ static int hc_sr04_release(struct inode *inode, struct file *filp) {
 static ssize_t hc_sr04_read (struct file *filp, char __user *buf , size_t count , loff_t * arg)
 {
 
+	
 	int ret = 0;
-	int time_us = 0;
-	int timeout = 1000000;
-
+	struct hc_sr04 *dev = filp->private_data;
+	dev->data_ready = 0;
+	
 	unsigned long flags;
-    /* 中断屏蔽 */
-    local_irq_save(flags);
+   
+   
 
 	 /* 启动触发信号 */
     gpio_set_value(hc_sr04.gpio_trig, 1);  
     udelay(15);
     gpio_set_value(hc_sr04.gpio_trig, 0);
-	local_irq_restore(flags);
-	//等待echo引脚变为高电平
-	while (gpio_get_value(hc_sr04.gpio_echo) == 0 && timeout) {
-		
-		timeout--;
 
-		udelay(1);
-	}
-
-	if (timeout == 0) {
-		
-		printk("timeout\r\n");
-		
-		return -EAGAIN;
-	}
+	wait_event_interruptible_timeout(dev->wq, dev->data_ready, msecs_to_jiffies(60));
 
 	
-	timeout = 1000000;
-	while(gpio_get_value(hc_sr04.gpio_echo) == 1 && timeout) {
-		udelay(1);
-		time_us++;
-		timeout--;
-	}
+	if (count > 4) count = 4;
+	if (dev->distance_cm > 4 && dev->distance_cm < 400) {
+		if (dev->data_ready == 1) {
+			if (copy_to_user(buf, &dev->distance_cm, count) != 0) {
+			return -EFAULT;
 
-	if (timeout == 0) {
-		printk("timeout2\r\n");
-		
-		return -EAGAIN;
-	}
-	
-	count = count > 4 ? 4 : count;
-
-	int distance_cm = (time_us * 340) / 20000;
-	distance_cm *= 2;
-	if (distance_cm > 4 && distance_cm < 400) {
-		printk("drv:distance_cm:%d\n", distance_cm);
-		if (copy_to_user(buf, &distance_cm, sizeof(distance_cm))) {
-
-		 ret = -EFAULT;
+			} else {
+				ret = count;
+			}
 		} else {
-			ret = count;
-
+			ret  = -ETIMEDOUT;
 		}
+		
 
 	} 
 	
-
-	
-
 	return ret;
 }
 
@@ -138,7 +121,45 @@ static const struct file_operations fops = {
 	.read  = hc_sr04_read,
 };
 
+static irqreturn_t hc_sr04_irq_handler(int irq, void *dev_id)
+{
+    struct hc_sr04 *dev = (struct hc_sr04 *)dev_id;
+    unsigned long flags;
 
+  
+	if (gpio_get_value(dev->gpio_echo) == 1) {
+		dev->start_us = ktime_to_us(ktime_get());
+	} else {
+		dev->end_us = ktime_to_us(ktime_get());	
+		if (!work_pending(&dev->work))
+			schedule_work(&dev->work);
+	}
+   	
+
+  
+	
+    return IRQ_HANDLED;
+}
+
+static void hc_sr04_work_handler(struct work_struct *work)
+{
+	
+	
+	
+	//struct irq_gpio_key *dev = container_of(work, struct irq_gpio_key, work);
+	//dev->timer.data = (volatile unsigned long)dev;
+	//mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10));
+	struct hc_sr04 *dev = container_of(work, struct hc_sr04, work);
+	u32 time_us = dev->end_us - dev->start_us;
+	
+	dev->distance_cm = time_us * 34 / 2000;;
+	dev->data_ready = 1;
+	wake_up_interruptible(&dev->wq);
+
+	
+	
+	
+}
 
 static int hc_sr04_probe(struct platform_device *dev) {
 	
@@ -246,6 +267,26 @@ static int hc_sr04_probe(struct platform_device *dev) {
 			goto faile_gpio_direction;
 		}
 		printk("hc_sr04 probe successful\n");
+
+		hc_sr04.irq_echo = gpio_to_irq(hc_sr04.gpio_echo);
+	    if (hc_sr04.irq_echo < 0) {
+	        dev_err(&dev->dev, "GPIO 转中断号失败\n");
+	       goto faile_gpio_direction;
+	    }
+		
+		ret = devm_request_irq(
+			&dev->dev, 
+			hc_sr04.irq_echo, 
+			hc_sr04_irq_handler, 
+			IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, 
+			"hc_sr04_echo_irq", 
+			&hc_sr04);
+		if (ret != 0) {
+			printk("devm_request_irq error\n");
+			goto faile_gpio_direction;
+		}
+		INIT_WORK(&hc_sr04.work, hc_sr04_work_handler);
+		init_waitqueue_head(&hc_sr04.wq);
 		return 0;	
 	
 	
