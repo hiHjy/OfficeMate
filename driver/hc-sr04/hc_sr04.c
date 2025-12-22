@@ -89,20 +89,21 @@ static ssize_t hc_sr04_read (struct file *filp, char __user *buf , size_t count 
 
 	
 	if (count > 4) count = 4;
-	if (dev->distance_cm > 4 && dev->distance_cm < 400) {
-		if (dev->data_ready == 1) {
-			if (copy_to_user(buf, &dev->distance_cm, count) != 0) {
+	
+	printk("kernel:%d\n",dev->distance_cm);
+	if (dev->data_ready == 1) {
+		if (copy_to_user(buf, &dev->distance_cm, count) != 0) {
 			return -EFAULT;
 
-			} else {
-				ret = count;
-			}
 		} else {
-			ret  = -ETIMEDOUT;
+			ret = count;
 		}
+	} else {
+		ret  = -ETIMEDOUT;
+	}
 		
 
-	} 
+	
 	
 	return ret;
 }
@@ -146,14 +147,17 @@ static void hc_sr04_work_handler(struct work_struct *work)
 	
 	
 	
-	//struct irq_gpio_key *dev = container_of(work, struct irq_gpio_key, work);
-	//dev->timer.data = (volatile unsigned long)dev;
-	//mod_timer(&dev->timer, jiffies + msecs_to_jiffies(10));
+	
 	struct hc_sr04 *dev = container_of(work, struct hc_sr04, work);
 	u32 time_us = dev->end_us - dev->start_us;
 	
 	dev->distance_cm = time_us * 34 / 2000;;
-	dev->data_ready = 1;
+	if (dev->distance_cm > 6 && dev->distance_cm < 400) {
+		dev->data_ready = 1;
+	}
+	
+	
+
 	wake_up_interruptible(&dev->wq);
 
 	
@@ -372,3 +376,4 @@ module_init(hc_sr04_drv_init);
 module_exit(hc_sr04_drv_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("hjy");
+
