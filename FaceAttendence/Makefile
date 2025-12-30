@@ -58,6 +58,7 @@ SOURCES       = databasemannager.cpp \
 		form.cpp \
 		main.cpp \
 		faceattendence.cpp \
+		netonlinechecker.cpp \
 		record.cpp \
 		register.cpp \
 		widget_login_page.cpp \
@@ -66,6 +67,7 @@ SOURCES       = databasemannager.cpp \
 		moc_dialog_admin.cpp \
 		moc_faceattendence.cpp \
 		moc_form.cpp \
+		moc_netonlinechecker.cpp \
 		moc_record.cpp \
 		moc_register.cpp \
 		moc_widget_login_page.cpp \
@@ -76,6 +78,7 @@ OBJECTS       = databasemannager.o \
 		form.o \
 		main.o \
 		faceattendence.o \
+		netonlinechecker.o \
 		record.o \
 		register.o \
 		widget_login_page.o \
@@ -85,6 +88,7 @@ OBJECTS       = databasemannager.o \
 		moc_dialog_admin.o \
 		moc_faceattendence.o \
 		moc_form.o \
+		moc_netonlinechecker.o \
 		moc_record.o \
 		moc_register.o \
 		moc_widget_login_page.o \
@@ -190,6 +194,7 @@ DIST          = ../../../arm-qt/mkspecs/features/spec_pre.prf \
 		face_api.h \
 		faceattendence.h \
 		form.h \
+		netonlinechecker.h \
 		record.h \
 		register.h \
 		widget_login_page.h \
@@ -199,6 +204,7 @@ DIST          = ../../../arm-qt/mkspecs/features/spec_pre.prf \
 		form.cpp \
 		main.cpp \
 		faceattendence.cpp \
+		netonlinechecker.cpp \
 		record.cpp \
 		register.cpp \
 		widget_login_page.cpp \
@@ -427,8 +433,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents img.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../arm-qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents databasemannager.h dialog_admin.h face_api.h faceattendence.h form.h record.h register.h widget_login_page.h widget_system.h $(DISTDIR)/
-	$(COPY_FILE) --parents databasemannager.cpp dialog_admin.cpp face_api.cpp form.cpp main.cpp faceattendence.cpp record.cpp register.cpp widget_login_page.cpp widget_system.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents databasemannager.h dialog_admin.h face_api.h faceattendence.h form.h netonlinechecker.h record.h register.h widget_login_page.h widget_system.h $(DISTDIR)/
+	$(COPY_FILE) --parents databasemannager.cpp dialog_admin.cpp face_api.cpp form.cpp main.cpp faceattendence.cpp netonlinechecker.cpp record.cpp register.cpp widget_login_page.cpp widget_system.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents dialog_admin.ui faceattendence.ui form.ui record.ui register.ui widget_login_page.ui widget_system.ui $(DISTDIR)/
 
 
@@ -472,9 +478,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../arm-qt/mkspecs/features/data/dummy.cpp
 	arm-linux-gnueabihf-g++ -pipe -O2 -march=armv7-a -mtune=cortex-a7 -mfpu=neon -mfloat-abi=hard -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../../arm-qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_databasemannager.cpp moc_dialog_admin.cpp moc_faceattendence.cpp moc_form.cpp moc_record.cpp moc_register.cpp moc_widget_login_page.cpp moc_widget_system.cpp
+compiler_moc_header_make_all: moc_databasemannager.cpp moc_dialog_admin.cpp moc_faceattendence.cpp moc_form.cpp moc_netonlinechecker.cpp moc_record.cpp moc_register.cpp moc_widget_login_page.cpp moc_widget_system.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_databasemannager.cpp moc_dialog_admin.cpp moc_faceattendence.cpp moc_form.cpp moc_record.cpp moc_register.cpp moc_widget_login_page.cpp moc_widget_system.cpp
+	-$(DEL_FILE) moc_databasemannager.cpp moc_dialog_admin.cpp moc_faceattendence.cpp moc_form.cpp moc_netonlinechecker.cpp moc_record.cpp moc_register.cpp moc_widget_login_page.cpp moc_widget_system.cpp
 moc_databasemannager.cpp: databasemannager.h \
 		../../../arm-qt/include/QtCore/QObject \
 		../../../arm-qt/include/QtCore/qobject.h \
@@ -1169,6 +1175,61 @@ moc_form.cpp: form.h \
 		../../../arm-qt/bin/moc
 	/home/hjy/arm-qt/bin/moc $(DEFINES) --include /home/hjy/Documents/office_meta/FaceAttendence_copy/moc_predefs.h -I/home/hjy/arm-qt/mkspecs/linux-arm-gnueabi-g++ -I/home/hjy/Documents/office_meta/FaceAttendence_copy -I/opt/opencv4.5.2-arm/include -I/opt/opencv4.5.2-arm/include/opencv4/opencv2 -I/opt/opencv4.5.2-arm/include/opencv4 -I/home/hjy/arm-qt/include -I/home/hjy/arm-qt/include/QtMultimediaWidgets -I/home/hjy/arm-qt/include/QtMultimedia -I/home/hjy/arm-qt/include/QtQuickWidgets -I/home/hjy/arm-qt/include/QtWidgets -I/home/hjy/arm-qt/include/QtQuick -I/home/hjy/arm-qt/include/QtGui -I/home/hjy/arm-qt/include/QtQml -I/home/hjy/arm-qt/include/QtNetwork -I/home/hjy/arm-qt/include/QtSql -I/home/hjy/arm-qt/include/QtCore -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4 -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/arm-linux-gnueabihf -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/backward -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include-fixed -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include form.h -o moc_form.cpp
 
+moc_netonlinechecker.cpp: netonlinechecker.h \
+		../../../arm-qt/include/QtCore/QObject \
+		../../../arm-qt/include/QtCore/qobject.h \
+		../../../arm-qt/include/QtCore/qobjectdefs.h \
+		../../../arm-qt/include/QtCore/qnamespace.h \
+		../../../arm-qt/include/QtCore/qglobal.h \
+		../../../arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../../arm-qt/include/QtCore/qconfig.h \
+		../../../arm-qt/include/QtCore/qtcore-config.h \
+		../../../arm-qt/include/QtCore/qsystemdetection.h \
+		../../../arm-qt/include/QtCore/qprocessordetection.h \
+		../../../arm-qt/include/QtCore/qcompilerdetection.h \
+		../../../arm-qt/include/QtCore/qtypeinfo.h \
+		../../../arm-qt/include/QtCore/qsysinfo.h \
+		../../../arm-qt/include/QtCore/qlogging.h \
+		../../../arm-qt/include/QtCore/qflags.h \
+		../../../arm-qt/include/QtCore/qatomic.h \
+		../../../arm-qt/include/QtCore/qbasicatomic.h \
+		../../../arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../../arm-qt/include/QtCore/qgenericatomic.h \
+		../../../arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../../arm-qt/include/QtCore/qatomic_msvc.h \
+		../../../arm-qt/include/QtCore/qglobalstatic.h \
+		../../../arm-qt/include/QtCore/qmutex.h \
+		../../../arm-qt/include/QtCore/qnumeric.h \
+		../../../arm-qt/include/QtCore/qversiontagging.h \
+		../../../arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../../arm-qt/include/QtCore/qstring.h \
+		../../../arm-qt/include/QtCore/qchar.h \
+		../../../arm-qt/include/QtCore/qbytearray.h \
+		../../../arm-qt/include/QtCore/qrefcount.h \
+		../../../arm-qt/include/QtCore/qarraydata.h \
+		../../../arm-qt/include/QtCore/qstringliteral.h \
+		../../../arm-qt/include/QtCore/qstringalgorithms.h \
+		../../../arm-qt/include/QtCore/qstringview.h \
+		../../../arm-qt/include/QtCore/qstringbuilder.h \
+		../../../arm-qt/include/QtCore/qlist.h \
+		../../../arm-qt/include/QtCore/qalgorithms.h \
+		../../../arm-qt/include/QtCore/qiterator.h \
+		../../../arm-qt/include/QtCore/qhashfunctions.h \
+		../../../arm-qt/include/QtCore/qpair.h \
+		../../../arm-qt/include/QtCore/qbytearraylist.h \
+		../../../arm-qt/include/QtCore/qstringlist.h \
+		../../../arm-qt/include/QtCore/qregexp.h \
+		../../../arm-qt/include/QtCore/qstringmatcher.h \
+		../../../arm-qt/include/QtCore/qcoreevent.h \
+		../../../arm-qt/include/QtCore/qscopedpointer.h \
+		../../../arm-qt/include/QtCore/qmetatype.h \
+		../../../arm-qt/include/QtCore/qvarlengtharray.h \
+		../../../arm-qt/include/QtCore/qcontainerfwd.h \
+		../../../arm-qt/include/QtCore/qobject_impl.h \
+		moc_predefs.h \
+		../../../arm-qt/bin/moc
+	/home/hjy/arm-qt/bin/moc $(DEFINES) --include /home/hjy/Documents/office_meta/FaceAttendence_copy/moc_predefs.h -I/home/hjy/arm-qt/mkspecs/linux-arm-gnueabi-g++ -I/home/hjy/Documents/office_meta/FaceAttendence_copy -I/opt/opencv4.5.2-arm/include -I/opt/opencv4.5.2-arm/include/opencv4/opencv2 -I/opt/opencv4.5.2-arm/include/opencv4 -I/home/hjy/arm-qt/include -I/home/hjy/arm-qt/include/QtMultimediaWidgets -I/home/hjy/arm-qt/include/QtMultimedia -I/home/hjy/arm-qt/include/QtQuickWidgets -I/home/hjy/arm-qt/include/QtWidgets -I/home/hjy/arm-qt/include/QtQuick -I/home/hjy/arm-qt/include/QtGui -I/home/hjy/arm-qt/include/QtQml -I/home/hjy/arm-qt/include/QtNetwork -I/home/hjy/arm-qt/include/QtSql -I/home/hjy/arm-qt/include/QtCore -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4 -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/arm-linux-gnueabihf -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/backward -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include-fixed -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include netonlinechecker.h -o moc_netonlinechecker.cpp
+
 moc_record.cpp: record.h \
 		../../../arm-qt/include/QtWidgets/QWidget \
 		../../../arm-qt/include/QtWidgets/qwidget.h \
@@ -1273,6 +1334,12 @@ moc_record.cpp: record.h \
 		../../../arm-qt/include/QtCore/qfiledevice.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
 		../../../arm-qt/include/QtGui/qtouchdevice.h \
+		../../../arm-qt/include/QtSql/QSqlQueryModel \
+		../../../arm-qt/include/QtSql/qsqlquerymodel.h \
+		../../../arm-qt/include/QtSql/qtsqlglobal.h \
+		../../../arm-qt/include/QtSql/qtsql-config.h \
+		../../../arm-qt/include/QtCore/qabstractitemmodel.h \
+		../../../arm-qt/include/QtSql/qsqldatabase.h \
 		moc_predefs.h \
 		../../../arm-qt/bin/moc
 	/home/hjy/arm-qt/bin/moc $(DEFINES) --include /home/hjy/Documents/office_meta/FaceAttendence_copy/moc_predefs.h -I/home/hjy/arm-qt/mkspecs/linux-arm-gnueabi-g++ -I/home/hjy/Documents/office_meta/FaceAttendence_copy -I/opt/opencv4.5.2-arm/include -I/opt/opencv4.5.2-arm/include/opencv4/opencv2 -I/opt/opencv4.5.2-arm/include/opencv4 -I/home/hjy/arm-qt/include -I/home/hjy/arm-qt/include/QtMultimediaWidgets -I/home/hjy/arm-qt/include/QtMultimedia -I/home/hjy/arm-qt/include/QtQuickWidgets -I/home/hjy/arm-qt/include/QtWidgets -I/home/hjy/arm-qt/include/QtQuick -I/home/hjy/arm-qt/include/QtGui -I/home/hjy/arm-qt/include/QtQml -I/home/hjy/arm-qt/include/QtNetwork -I/home/hjy/arm-qt/include/QtSql -I/home/hjy/arm-qt/include/QtCore -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4 -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/arm-linux-gnueabihf -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include/c++/4.9.4/backward -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4/include-fixed -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/include -I/usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include record.h -o moc_record.cpp
@@ -2979,7 +3046,13 @@ ui_dialog_admin.h: dialog_admin.ui \
 		../../../arm-qt/include/QtCore/qfile.h \
 		../../../arm-qt/include/QtCore/qfiledevice.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
-		../../../arm-qt/include/QtGui/qtouchdevice.h
+		../../../arm-qt/include/QtGui/qtouchdevice.h \
+		../../../arm-qt/include/QtSql/QSqlQueryModel \
+		../../../arm-qt/include/QtSql/qsqlquerymodel.h \
+		../../../arm-qt/include/QtSql/qtsqlglobal.h \
+		../../../arm-qt/include/QtSql/qtsql-config.h \
+		../../../arm-qt/include/QtCore/qabstractitemmodel.h \
+		../../../arm-qt/include/QtSql/qsqldatabase.h
 	/home/hjy/arm-qt/bin/uic dialog_admin.ui -o ui_dialog_admin.h
 
 ui_faceattendence.h: faceattendence.ui \
@@ -2990,6 +3063,7 @@ ui_form.h: form.ui \
 		../../../arm-qt/bin/uic \
 		faceattendence.h \
 		widget_system.h \
+		widget_login_page.h \
 		../../../arm-qt/include/QtWidgets/QMainWindow \
 		../../../arm-qt/include/QtWidgets/qmainwindow.h \
 		../../../arm-qt/include/QtWidgets/qtwidgetsglobal.h \
@@ -3347,6 +3421,109 @@ ui_form.h: form.ui \
 		../../../arm-qt/include/QtCore/qfile.h \
 		../../../arm-qt/include/QtCore/qfiledevice.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
+		../../../arm-qt/include/QtGui/qtouchdevice.h \
+		../../../arm-qt/include/QtWidgets/QWidget \
+		../../../arm-qt/include/QtWidgets/qwidget.h \
+		../../../arm-qt/include/QtWidgets/qtwidgetsglobal.h \
+		../../../arm-qt/include/QtGui/qtguiglobal.h \
+		../../../arm-qt/include/QtCore/qglobal.h \
+		../../../arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../../arm-qt/include/QtCore/qconfig.h \
+		../../../arm-qt/include/QtCore/qtcore-config.h \
+		../../../arm-qt/include/QtCore/qsystemdetection.h \
+		../../../arm-qt/include/QtCore/qprocessordetection.h \
+		../../../arm-qt/include/QtCore/qcompilerdetection.h \
+		../../../arm-qt/include/QtCore/qtypeinfo.h \
+		../../../arm-qt/include/QtCore/qsysinfo.h \
+		../../../arm-qt/include/QtCore/qlogging.h \
+		../../../arm-qt/include/QtCore/qflags.h \
+		../../../arm-qt/include/QtCore/qatomic.h \
+		../../../arm-qt/include/QtCore/qbasicatomic.h \
+		../../../arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../../arm-qt/include/QtCore/qgenericatomic.h \
+		../../../arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../../arm-qt/include/QtCore/qatomic_msvc.h \
+		../../../arm-qt/include/QtCore/qglobalstatic.h \
+		../../../arm-qt/include/QtCore/qmutex.h \
+		../../../arm-qt/include/QtCore/qnumeric.h \
+		../../../arm-qt/include/QtCore/qversiontagging.h \
+		../../../arm-qt/include/QtGui/qtgui-config.h \
+		../../../arm-qt/include/QtWidgets/qtwidgets-config.h \
+		../../../arm-qt/include/QtGui/qwindowdefs.h \
+		../../../arm-qt/include/QtCore/qobjectdefs.h \
+		../../../arm-qt/include/QtCore/qnamespace.h \
+		../../../arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../../arm-qt/include/QtGui/qwindowdefs_win.h \
+		../../../arm-qt/include/QtCore/qobject.h \
+		../../../arm-qt/include/QtCore/qstring.h \
+		../../../arm-qt/include/QtCore/qchar.h \
+		../../../arm-qt/include/QtCore/qbytearray.h \
+		../../../arm-qt/include/QtCore/qrefcount.h \
+		../../../arm-qt/include/QtCore/qarraydata.h \
+		../../../arm-qt/include/QtCore/qstringliteral.h \
+		../../../arm-qt/include/QtCore/qstringalgorithms.h \
+		../../../arm-qt/include/QtCore/qstringview.h \
+		../../../arm-qt/include/QtCore/qstringbuilder.h \
+		../../../arm-qt/include/QtCore/qlist.h \
+		../../../arm-qt/include/QtCore/qalgorithms.h \
+		../../../arm-qt/include/QtCore/qiterator.h \
+		../../../arm-qt/include/QtCore/qhashfunctions.h \
+		../../../arm-qt/include/QtCore/qpair.h \
+		../../../arm-qt/include/QtCore/qbytearraylist.h \
+		../../../arm-qt/include/QtCore/qstringlist.h \
+		../../../arm-qt/include/QtCore/qregexp.h \
+		../../../arm-qt/include/QtCore/qstringmatcher.h \
+		../../../arm-qt/include/QtCore/qcoreevent.h \
+		../../../arm-qt/include/QtCore/qscopedpointer.h \
+		../../../arm-qt/include/QtCore/qmetatype.h \
+		../../../arm-qt/include/QtCore/qvarlengtharray.h \
+		../../../arm-qt/include/QtCore/qcontainerfwd.h \
+		../../../arm-qt/include/QtCore/qobject_impl.h \
+		../../../arm-qt/include/QtCore/qmargins.h \
+		../../../arm-qt/include/QtGui/qpaintdevice.h \
+		../../../arm-qt/include/QtCore/qrect.h \
+		../../../arm-qt/include/QtCore/qsize.h \
+		../../../arm-qt/include/QtCore/qpoint.h \
+		../../../arm-qt/include/QtGui/qpalette.h \
+		../../../arm-qt/include/QtGui/qcolor.h \
+		../../../arm-qt/include/QtGui/qrgb.h \
+		../../../arm-qt/include/QtGui/qrgba64.h \
+		../../../arm-qt/include/QtGui/qbrush.h \
+		../../../arm-qt/include/QtCore/qvector.h \
+		../../../arm-qt/include/QtGui/qmatrix.h \
+		../../../arm-qt/include/QtGui/qpolygon.h \
+		../../../arm-qt/include/QtGui/qregion.h \
+		../../../arm-qt/include/QtCore/qdatastream.h \
+		../../../arm-qt/include/QtCore/qiodevice.h \
+		../../../arm-qt/include/QtCore/qline.h \
+		../../../arm-qt/include/QtGui/qtransform.h \
+		../../../arm-qt/include/QtGui/qpainterpath.h \
+		../../../arm-qt/include/QtGui/qimage.h \
+		../../../arm-qt/include/QtGui/qpixelformat.h \
+		../../../arm-qt/include/QtGui/qpixmap.h \
+		../../../arm-qt/include/QtCore/qsharedpointer.h \
+		../../../arm-qt/include/QtCore/qshareddata.h \
+		../../../arm-qt/include/QtCore/qhash.h \
+		../../../arm-qt/include/QtCore/qsharedpointer_impl.h \
+		../../../arm-qt/include/QtGui/qfont.h \
+		../../../arm-qt/include/QtGui/qfontmetrics.h \
+		../../../arm-qt/include/QtGui/qfontinfo.h \
+		../../../arm-qt/include/QtWidgets/qsizepolicy.h \
+		../../../arm-qt/include/QtGui/qcursor.h \
+		../../../arm-qt/include/QtGui/qkeysequence.h \
+		../../../arm-qt/include/QtGui/qevent.h \
+		../../../arm-qt/include/QtCore/qvariant.h \
+		../../../arm-qt/include/QtCore/qmap.h \
+		../../../arm-qt/include/QtCore/qdebug.h \
+		../../../arm-qt/include/QtCore/qtextstream.h \
+		../../../arm-qt/include/QtCore/qlocale.h \
+		../../../arm-qt/include/QtCore/qset.h \
+		../../../arm-qt/include/QtCore/qcontiguouscache.h \
+		../../../arm-qt/include/QtCore/qurl.h \
+		../../../arm-qt/include/QtCore/qurlquery.h \
+		../../../arm-qt/include/QtCore/qfile.h \
+		../../../arm-qt/include/QtCore/qfiledevice.h \
+		../../../arm-qt/include/QtGui/qvector2d.h \
 		../../../arm-qt/include/QtGui/qtouchdevice.h
 	/home/hjy/arm-qt/bin/uic form.ui -o ui_form.h
 
@@ -3449,7 +3626,9 @@ databasemannager.o: databasemannager.cpp databasemannager.h \
 		../../../arm-qt/include/QtCore/qset.h \
 		../../../arm-qt/include/QtCore/qcontiguouscache.h \
 		../../../arm-qt/include/QtCore/qsharedpointer.h \
-		../../../arm-qt/include/QtCore/qsharedpointer_impl.h
+		../../../arm-qt/include/QtCore/qsharedpointer_impl.h \
+		../../../arm-qt/include/QtCore/QTime \
+		../../../arm-qt/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o databasemannager.o databasemannager.cpp
 
 dialog_admin.o: dialog_admin.cpp dialog_admin.h \
@@ -3556,7 +3735,600 @@ dialog_admin.o: dialog_admin.cpp dialog_admin.h \
 		../../../arm-qt/include/QtCore/qfile.h \
 		../../../arm-qt/include/QtCore/qfiledevice.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
-		../../../arm-qt/include/QtGui/qtouchdevice.h
+		../../../arm-qt/include/QtGui/qtouchdevice.h \
+		ui_dialog_admin.h \
+		../../../arm-qt/include/QtCore/QVariant \
+		../../../arm-qt/include/QtWidgets/QApplication \
+		../../../arm-qt/include/QtWidgets/qapplication.h \
+		../../../arm-qt/include/QtCore/qcoreapplication.h \
+		../../../arm-qt/include/QtCore/qeventloop.h \
+		../../../arm-qt/include/QtWidgets/qdesktopwidget.h \
+		../../../arm-qt/include/QtGui/qguiapplication.h \
+		../../../arm-qt/include/QtGui/qinputmethod.h \
+		../../../arm-qt/include/QtWidgets/QPushButton \
+		../../../arm-qt/include/QtWidgets/qpushbutton.h \
+		../../../arm-qt/include/QtWidgets/qabstractbutton.h \
+		../../../arm-qt/include/QtGui/qicon.h \
+		../../../arm-qt/include/QtWidgets/QTabWidget \
+		../../../arm-qt/include/QtWidgets/qtabwidget.h \
+		../../../arm-qt/include/QtWidgets/QVBoxLayout \
+		../../../arm-qt/include/QtWidgets/qboxlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../../arm-qt/include/QtWidgets/qgridlayout.h \
+		../../../arm-qt/include/QtWidgets/QWidget \
+		record.h \
+		../../../arm-qt/include/QtSql/QSqlQueryModel \
+		../../../arm-qt/include/QtSql/qsqlquerymodel.h \
+		../../../arm-qt/include/QtSql/qtsqlglobal.h \
+		../../../arm-qt/include/QtSql/qtsql-config.h \
+		../../../arm-qt/include/QtCore/qabstractitemmodel.h \
+		../../../arm-qt/include/QtSql/qsqldatabase.h \
+		register.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/opencv.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/opencv_modules.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cvdef.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/version.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/cvconfig.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/hal/interface.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cv_cpu_helper.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/hal/msa_macros.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/fast_math.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/base.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cvstd.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/neon_utils.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/vsx_utils.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/check.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/traits.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/matx.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/saturate.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/types.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/mat.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/bufferpool.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/mat.inl.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/persistence.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/operations.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cvstd.inl.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/utility.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/utils/instrumentation.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/utils/tls.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/optim.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/ovx.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/calib3d.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/features2d.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/miniflann.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/defines.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/config.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/affine.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/flann_base.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/general.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/matrix.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/params.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/any.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/saving.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/nn_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/result_set.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/all_indices.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/kdtree_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/dynamic_bitset.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/dist.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/heap.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/allocator.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/random.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/kdtree_single_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/kmeans_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/logger.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/composite_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/linear_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/lsh_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/lsh_table.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/autotuned_index.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/ground_truth.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/index_testing.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/timer.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/flann/sampling.h \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/highgui.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/imgcodecs.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/videoio.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/imgproc.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/imgproc/segmentation.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/ml.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/ml/ml.inl.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/objdetect.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/photo.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/warpers.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cuda.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cuda_types.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/core/cuda.inl.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/util.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/camera.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/stitching/detail/blenders.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/video.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/video/tracking.hpp \
+		/opt/opencv4.5.2-arm/include/opencv4/opencv2/video/background_segm.hpp \
+		../../../arm-qt/include/QtQuickWidgets/QtQuickWidgets \
+		../../../arm-qt/include/QtQuickWidgets/QtQuickWidgetsDepends \
+		../../../arm-qt/include/QtCore/QtCore \
+		../../../arm-qt/include/QtCore/QtCoreDepends \
+		../../../arm-qt/include/QtCore/qabstractanimation.h \
+		../../../arm-qt/include/QtCore/qabstracteventdispatcher.h \
+		../../../arm-qt/include/QtCore/qabstractnativeeventfilter.h \
+		../../../arm-qt/include/QtCore/qabstractproxymodel.h \
+		../../../arm-qt/include/QtCore/qabstractstate.h \
+		../../../arm-qt/include/QtCore/qabstracttransition.h \
+		../../../arm-qt/include/QtCore/qanimationgroup.h \
+		../../../arm-qt/include/QtCore/qarraydataops.h \
+		../../../arm-qt/include/QtCore/qarraydatapointer.h \
+		../../../arm-qt/include/QtCore/qbasictimer.h \
+		../../../arm-qt/include/QtCore/qbitarray.h \
+		../../../arm-qt/include/QtCore/qbuffer.h \
+		../../../arm-qt/include/QtCore/qbytearraymatcher.h \
+		../../../arm-qt/include/QtCore/qcache.h \
+		../../../arm-qt/include/QtCore/qcborarray.h \
+		../../../arm-qt/include/QtCore/qcborvalue.h \
+		../../../arm-qt/include/QtCore/qdatetime.h \
+		../../../arm-qt/include/QtCore/qcborcommon.h \
+		../../../arm-qt/include/QtCore/qregularexpression.h \
+		../../../arm-qt/include/QtCore/quuid.h \
+		../../../arm-qt/include/QtCore/qcbormap.h \
+		../../../arm-qt/include/QtCore/qcborstream.h \
+		../../../arm-qt/include/QtCore/qfloat16.h \
+		../../../arm-qt/include/QtCore/qcollator.h \
+		../../../arm-qt/include/QtCore/qcommandlineoption.h \
+		../../../arm-qt/include/QtCore/qcommandlineparser.h \
+		../../../arm-qt/include/QtCore/qcryptographichash.h \
+		../../../arm-qt/include/QtCore/qdeadlinetimer.h \
+		../../../arm-qt/include/QtCore/qelapsedtimer.h \
+		../../../arm-qt/include/QtCore/qdir.h \
+		../../../arm-qt/include/QtCore/qfileinfo.h \
+		../../../arm-qt/include/QtCore/qdiriterator.h \
+		../../../arm-qt/include/QtCore/qeasingcurve.h \
+		../../../arm-qt/include/QtCore/qendian.h \
+		../../../arm-qt/include/QtCore/qeventtransition.h \
+		../../../arm-qt/include/QtCore/qexception.h \
+		../../../arm-qt/include/QtCore/qfactoryinterface.h \
+		../../../arm-qt/include/QtCore/qfileselector.h \
+		../../../arm-qt/include/QtCore/QObject \
+		../../../arm-qt/include/QtCore/QStringList \
+		../../../arm-qt/include/QtCore/qfilesystemwatcher.h \
+		../../../arm-qt/include/QtCore/qfinalstate.h \
+		../../../arm-qt/include/QtCore/qfuture.h \
+		../../../arm-qt/include/QtCore/qfutureinterface.h \
+		../../../arm-qt/include/QtCore/qrunnable.h \
+		../../../arm-qt/include/QtCore/qresultstore.h \
+		../../../arm-qt/include/QtCore/qfuturesynchronizer.h \
+		../../../arm-qt/include/QtCore/qfuturewatcher.h \
+		../../../arm-qt/include/QtCore/qhistorystate.h \
+		../../../arm-qt/include/QtCore/qidentityproxymodel.h \
+		../../../arm-qt/include/QtCore/qisenum.h \
+		../../../arm-qt/include/QtCore/qitemselectionmodel.h \
+		../../../arm-qt/include/QtCore/qjsonarray.h \
+		../../../arm-qt/include/QtCore/qjsonvalue.h \
+		../../../arm-qt/include/QtCore/qjsondocument.h \
+		../../../arm-qt/include/QtCore/qjsonobject.h \
+		../../../arm-qt/include/QtCore/qlibrary.h \
+		../../../arm-qt/include/QtCore/qlibraryinfo.h \
+		../../../arm-qt/include/QtCore/qversionnumber.h \
+		../../../arm-qt/include/QtCore/qlinkedlist.h \
+		../../../arm-qt/include/QtCore/qlockfile.h \
+		../../../arm-qt/include/QtCore/qloggingcategory.h \
+		../../../arm-qt/include/QtCore/qmath.h \
+		../../../arm-qt/include/QtCore/qmessageauthenticationcode.h \
+		../../../arm-qt/include/QtCore/qmetaobject.h \
+		../../../arm-qt/include/QtCore/qmimedata.h \
+		../../../arm-qt/include/QtCore/qmimedatabase.h \
+		../../../arm-qt/include/QtCore/qmimetype.h \
+		../../../arm-qt/include/QtCore/qobjectcleanuphandler.h \
+		../../../arm-qt/include/QtCore/qoperatingsystemversion.h \
+		../../../arm-qt/include/QtCore/qparallelanimationgroup.h \
+		../../../arm-qt/include/QtCore/qpauseanimation.h \
+		../../../arm-qt/include/QtCore/qplugin.h \
+		../../../arm-qt/include/QtCore/qpointer.h \
+		../../../arm-qt/include/QtCore/qpluginloader.h \
+		../../../arm-qt/include/QtCore/qprocess.h \
+		../../../arm-qt/include/QtCore/qpropertyanimation.h \
+		../../../arm-qt/include/QtCore/qvariantanimation.h \
+		../../../arm-qt/include/QtCore/qqueue.h \
+		../../../arm-qt/include/QtCore/qrandom.h \
+		../../../arm-qt/include/QtCore/qreadwritelock.h \
+		../../../arm-qt/include/QtCore/qresource.h \
+		../../../arm-qt/include/QtCore/qsavefile.h \
+		../../../arm-qt/include/QtCore/qscopedvaluerollback.h \
+		../../../arm-qt/include/QtCore/qscopeguard.h \
+		../../../arm-qt/include/QtCore/qsemaphore.h \
+		../../../arm-qt/include/QtCore/qsequentialanimationgroup.h \
+		../../../arm-qt/include/QtCore/qsettings.h \
+		../../../arm-qt/include/QtCore/qsharedmemory.h \
+		../../../arm-qt/include/QtCore/qsignalmapper.h \
+		../../../arm-qt/include/QtCore/qsignaltransition.h \
+		../../../arm-qt/include/QtCore/qsocketnotifier.h \
+		../../../arm-qt/include/QtCore/qsortfilterproxymodel.h \
+		../../../arm-qt/include/QtCore/qstack.h \
+		../../../arm-qt/include/QtCore/qstandardpaths.h \
+		../../../arm-qt/include/QtCore/qstate.h \
+		../../../arm-qt/include/QtCore/qstatemachine.h \
+		../../../arm-qt/include/QtCore/qstorageinfo.h \
+		../../../arm-qt/include/QtCore/qstringlistmodel.h \
+		../../../arm-qt/include/QtCore/qsystemsemaphore.h \
+		../../../arm-qt/include/QtCore/qtemporarydir.h \
+		../../../arm-qt/include/QtCore/qtemporaryfile.h \
+		../../../arm-qt/include/QtCore/qtextboundaryfinder.h \
+		../../../arm-qt/include/QtCore/qtextcodec.h \
+		../../../arm-qt/include/QtCore/qthread.h \
+		../../../arm-qt/include/QtCore/qthreadpool.h \
+		../../../arm-qt/include/QtCore/qthreadstorage.h \
+		../../../arm-qt/include/QtCore/qtimeline.h \
+		../../../arm-qt/include/QtCore/qtimer.h \
+		../../../arm-qt/include/QtCore/qtimezone.h \
+		../../../arm-qt/include/QtCore/qtranslator.h \
+		../../../arm-qt/include/QtCore/qtypetraits.h \
+		../../../arm-qt/include/QtCore/qwaitcondition.h \
+		../../../arm-qt/include/QtCore/qwineventnotifier.h \
+		../../../arm-qt/include/QtCore/qxmlstream.h \
+		../../../arm-qt/include/QtCore/qtcoreversion.h \
+		../../../arm-qt/include/QtGui/QtGui \
+		../../../arm-qt/include/QtGui/QtGuiDepends \
+		../../../arm-qt/include/QtGui/qabstracttextdocumentlayout.h \
+		../../../arm-qt/include/QtGui/qtextlayout.h \
+		../../../arm-qt/include/QtGui/qtextformat.h \
+		../../../arm-qt/include/QtGui/qpen.h \
+		../../../arm-qt/include/QtGui/qtextoption.h \
+		../../../arm-qt/include/QtGui/qglyphrun.h \
+		../../../arm-qt/include/QtGui/qrawfont.h \
+		../../../arm-qt/include/QtGui/qfontdatabase.h \
+		../../../arm-qt/include/QtGui/qtextcursor.h \
+		../../../arm-qt/include/QtGui/qtextdocument.h \
+		../../../arm-qt/include/QtGui/qaccessible.h \
+		../../../arm-qt/include/QtGui/qaccessiblebridge.h \
+		../../../arm-qt/include/QtGui/qaccessibleobject.h \
+		../../../arm-qt/include/QtGui/qaccessibleplugin.h \
+		../../../arm-qt/include/QtGui/qbackingstore.h \
+		../../../arm-qt/include/QtGui/qwindow.h \
+		../../../arm-qt/include/QtCore/QEvent \
+		../../../arm-qt/include/QtCore/QMargins \
+		../../../arm-qt/include/QtCore/QRect \
+		../../../arm-qt/include/QtGui/qsurface.h \
+		../../../arm-qt/include/QtGui/qsurfaceformat.h \
+		../../../arm-qt/include/QtGui/qbitmap.h \
+		../../../arm-qt/include/QtGui/qclipboard.h \
+		../../../arm-qt/include/QtGui/qdesktopservices.h \
+		../../../arm-qt/include/QtGui/qdrag.h \
+		../../../arm-qt/include/QtGui/qgenericmatrix.h \
+		../../../arm-qt/include/QtGui/qgenericplugin.h \
+		../../../arm-qt/include/QtGui/qgenericpluginfactory.h \
+		../../../arm-qt/include/QtGui/qiconengine.h \
+		../../../arm-qt/include/QtGui/qiconengineplugin.h \
+		../../../arm-qt/include/QtGui/qimageiohandler.h \
+		../../../arm-qt/include/QtGui/qimagereader.h \
+		../../../arm-qt/include/QtGui/qimagewriter.h \
+		../../../arm-qt/include/QtGui/qmatrix4x4.h \
+		../../../arm-qt/include/QtGui/qvector3d.h \
+		../../../arm-qt/include/QtGui/qvector4d.h \
+		../../../arm-qt/include/QtGui/qquaternion.h \
+		../../../arm-qt/include/QtGui/qmovie.h \
+		../../../arm-qt/include/QtGui/qoffscreensurface.h \
+		../../../arm-qt/include/QtGui/qopengl.h \
+		../../../arm-qt/include/QtCore/qt_windows.h \
+		../../../arm-qt/include/QtGui/qopengles2ext.h \
+		../../../arm-qt/include/QtGui/qopenglext.h \
+		../../../arm-qt/include/QtGui/qopenglbuffer.h \
+		../../../arm-qt/include/QtGui/qopenglcontext.h \
+		../../../arm-qt/include/QtCore/QScopedPointer \
+		../../../arm-qt/include/QtGui/QSurfaceFormat \
+		../../../arm-qt/include/QtGui/qopenglversionfunctions.h \
+		../../../arm-qt/include/QtGui/qopengldebug.h \
+		../../../arm-qt/include/QtGui/qopenglextrafunctions.h \
+		../../../arm-qt/include/QtGui/qopenglfunctions.h \
+		../../../arm-qt/include/QtGui/qopenglframebufferobject.h \
+		../../../arm-qt/include/QtGui/qopenglpaintdevice.h \
+		../../../arm-qt/include/QtGui/qopenglpixeltransferoptions.h \
+		../../../arm-qt/include/QtCore/QSharedDataPointer \
+		../../../arm-qt/include/QtGui/qopenglshaderprogram.h \
+		../../../arm-qt/include/QtGui/qopengltexture.h \
+		../../../arm-qt/include/QtGui/qopengltextureblitter.h \
+		../../../arm-qt/include/QtGui/QMatrix3x3 \
+		../../../arm-qt/include/QtGui/QMatrix4x4 \
+		../../../arm-qt/include/QtGui/qopengltimerquery.h \
+		../../../arm-qt/include/QtGui/qopenglvertexarrayobject.h \
+		../../../arm-qt/include/QtGui/qopenglwindow.h \
+		../../../arm-qt/include/QtGui/QPaintDeviceWindow \
+		../../../arm-qt/include/QtGui/qpaintdevicewindow.h \
+		../../../arm-qt/include/QtGui/QWindow \
+		../../../arm-qt/include/QtGui/QPaintDevice \
+		../../../arm-qt/include/QtGui/QOpenGLContext \
+		../../../arm-qt/include/QtGui/QImage \
+		../../../arm-qt/include/QtGui/qpagedpaintdevice.h \
+		../../../arm-qt/include/QtGui/qpagelayout.h \
+		../../../arm-qt/include/QtGui/qpagesize.h \
+		../../../arm-qt/include/QtGui/qpaintengine.h \
+		../../../arm-qt/include/QtGui/qpainter.h \
+		../../../arm-qt/include/QtGui/qpdfwriter.h \
+		../../../arm-qt/include/QtGui/qpicture.h \
+		../../../arm-qt/include/QtGui/qpictureformatplugin.h \
+		../../../arm-qt/include/QtGui/qpixmapcache.h \
+		../../../arm-qt/include/QtGui/qrasterwindow.h \
+		../../../arm-qt/include/QtGui/qscreen.h \
+		../../../arm-qt/include/QtCore/QList \
+		../../../arm-qt/include/QtCore/QSize \
+		../../../arm-qt/include/QtCore/QSizeF \
+		../../../arm-qt/include/QtGui/QTransform \
+		../../../arm-qt/include/QtGui/qsessionmanager.h \
+		../../../arm-qt/include/QtGui/qstandarditemmodel.h \
+		../../../arm-qt/include/QtGui/qstatictext.h \
+		../../../arm-qt/include/QtGui/qstylehints.h \
+		../../../arm-qt/include/QtGui/qsyntaxhighlighter.h \
+		../../../arm-qt/include/QtGui/qtextobject.h \
+		../../../arm-qt/include/QtGui/qtextdocumentfragment.h \
+		../../../arm-qt/include/QtGui/qtextdocumentwriter.h \
+		../../../arm-qt/include/QtGui/qtextlist.h \
+		../../../arm-qt/include/QtGui/qtexttable.h \
+		../../../arm-qt/include/QtGui/qvalidator.h \
+		../../../arm-qt/include/QtGui/qtguiversion.h \
+		../../../arm-qt/include/QtQml/QtQml \
+		../../../arm-qt/include/QtQml/QtQmlDepends \
+		../../../arm-qt/include/QtNetwork/QtNetwork \
+		../../../arm-qt/include/QtNetwork/QtNetworkDepends \
+		../../../arm-qt/include/QtNetwork/qtnetworkglobal.h \
+		../../../arm-qt/include/QtNetwork/qtnetwork-config.h \
+		../../../arm-qt/include/QtNetwork/qabstractnetworkcache.h \
+		../../../arm-qt/include/QtNetwork/qnetworkrequest.h \
+		../../../arm-qt/include/QtCore/QString \
+		../../../arm-qt/include/QtCore/QUrl \
+		../../../arm-qt/include/QtNetwork/qabstractsocket.h \
+		../../../arm-qt/include/QtNetwork/qauthenticator.h \
+		../../../arm-qt/include/QtNetwork/qdnslookup.h \
+		../../../arm-qt/include/QtNetwork/qdtls.h \
+		../../../arm-qt/include/QtNetwork/qsslsocket.h \
+		../../../arm-qt/include/QtNetwork/qtcpsocket.h \
+		../../../arm-qt/include/QtNetwork/qsslerror.h \
+		../../../arm-qt/include/QtNetwork/qsslcertificate.h \
+		../../../arm-qt/include/QtNetwork/qssl.h \
+		../../../arm-qt/include/QtCore/QFlags \
+		../../../arm-qt/include/QtNetwork/qhostaddress.h \
+		../../../arm-qt/include/QtNetwork/qhostinfo.h \
+		../../../arm-qt/include/QtNetwork/qhstspolicy.h \
+		../../../arm-qt/include/QtNetwork/qhttpmultipart.h \
+		../../../arm-qt/include/QtCore/QByteArray \
+		../../../arm-qt/include/QtCore/QIODevice \
+		../../../arm-qt/include/QtNetwork/QNetworkRequest \
+		../../../arm-qt/include/QtNetwork/qlocalserver.h \
+		../../../arm-qt/include/QtNetwork/qlocalsocket.h \
+		../../../arm-qt/include/QtNetwork/qnetworkaccessmanager.h \
+		../../../arm-qt/include/QtCore/QVector \
+		../../../arm-qt/include/QtNetwork/QSslConfiguration \
+		../../../arm-qt/include/QtNetwork/qsslconfiguration.h \
+		../../../arm-qt/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		../../../arm-qt/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		../../../arm-qt/include/QtCore/QMetaType \
+		../../../arm-qt/include/QtNetwork/qnetworkconfigmanager.h \
+		../../../arm-qt/include/QtNetwork/qnetworkconfiguration.h \
+		../../../arm-qt/include/QtNetwork/qnetworkcookie.h \
+		../../../arm-qt/include/QtNetwork/qnetworkcookiejar.h \
+		../../../arm-qt/include/QtNetwork/qnetworkdatagram.h \
+		../../../arm-qt/include/QtNetwork/qnetworkdiskcache.h \
+		../../../arm-qt/include/QtNetwork/qnetworkinterface.h \
+		../../../arm-qt/include/QtNetwork/qnetworkproxy.h \
+		../../../arm-qt/include/QtNetwork/qnetworkreply.h \
+		../../../arm-qt/include/QtNetwork/QNetworkAccessManager \
+		../../../arm-qt/include/QtNetwork/qnetworksession.h \
+		../../../arm-qt/include/QtNetwork/qpassworddigestor.h \
+		../../../arm-qt/include/QtCore/QCryptographicHash \
+		../../../arm-qt/include/QtNetwork/qsctpserver.h \
+		../../../arm-qt/include/QtNetwork/qtcpserver.h \
+		../../../arm-qt/include/QtNetwork/qsctpsocket.h \
+		../../../arm-qt/include/QtNetwork/qsslcertificateextension.h \
+		../../../arm-qt/include/QtNetwork/qsslcipher.h \
+		../../../arm-qt/include/QtNetwork/qssldiffiehellmanparameters.h \
+		../../../arm-qt/include/QtNetwork/qsslellipticcurve.h \
+		../../../arm-qt/include/QtCore/QHash \
+		../../../arm-qt/include/QtNetwork/qsslkey.h \
+		../../../arm-qt/include/QtNetwork/qudpsocket.h \
+		../../../arm-qt/include/QtNetwork/qtnetworkversion.h \
+		../../../arm-qt/include/QtQml/qtqmlglobal.h \
+		../../../arm-qt/include/QtQml/qtqml-config.h \
+		../../../arm-qt/include/QtQml/qjsengine.h \
+		../../../arm-qt/include/QtQml/qjsvalue.h \
+		../../../arm-qt/include/QtQml/qqmldebug.h \
+		../../../arm-qt/include/QtQml/qjsvalueiterator.h \
+		../../../arm-qt/include/QtQml/qqml.h \
+		../../../arm-qt/include/QtQml/qqmlprivate.h \
+		../../../arm-qt/include/QtQml/qqmlparserstatus.h \
+		../../../arm-qt/include/QtQml/qqmlpropertyvaluesource.h \
+		../../../arm-qt/include/QtQml/qqmllist.h \
+		../../../arm-qt/include/QtQml/qqmlabstracturlinterceptor.h \
+		../../../arm-qt/include/QtQml/qqmlapplicationengine.h \
+		../../../arm-qt/include/QtQml/qqmlengine.h \
+		../../../arm-qt/include/QtQml/qqmlerror.h \
+		../../../arm-qt/include/QtQml/qqmlcomponent.h \
+		../../../arm-qt/include/QtQml/qqmlcontext.h \
+		../../../arm-qt/include/QtQml/qqmlexpression.h \
+		../../../arm-qt/include/QtQml/qqmlscriptstring.h \
+		../../../arm-qt/include/QtQml/qqmlextensioninterface.h \
+		../../../arm-qt/include/QtQml/qqmlextensionplugin.h \
+		../../../arm-qt/include/QtQml/qqmlfile.h \
+		../../../arm-qt/include/QtQml/qqmlfileselector.h \
+		../../../arm-qt/include/QtQml/QQmlEngine \
+		../../../arm-qt/include/QtQml/qqmlincubator.h \
+		../../../arm-qt/include/QtQml/qqmlinfo.h \
+		../../../arm-qt/include/QtQml/qqmlnetworkaccessmanagerfactory.h \
+		../../../arm-qt/include/QtQml/qqmlproperty.h \
+		../../../arm-qt/include/QtQml/qqmlpropertymap.h \
+		../../../arm-qt/include/QtQml/qtqmlversion.h \
+		../../../arm-qt/include/QtQuick/QtQuick \
+		../../../arm-qt/include/QtQuick/QtQuickDepends \
+		../../../arm-qt/include/QtQuick/qtquickglobal.h \
+		../../../arm-qt/include/QtQuick/qtquick-config.h \
+		../../../arm-qt/include/QtQuick/qquickframebufferobject.h \
+		../../../arm-qt/include/QtQuick/QQuickItem \
+		../../../arm-qt/include/QtQuick/qquickitem.h \
+		../../../arm-qt/include/QtQuick/qquickimageprovider.h \
+		../../../arm-qt/include/QtQuick/qquickitemgrabresult.h \
+		../../../arm-qt/include/QtQml/QJSValue \
+		../../../arm-qt/include/QtQuick/qquickpainteditem.h \
+		../../../arm-qt/include/QtQuick/qquickrendercontrol.h \
+		../../../arm-qt/include/QtQuick/qquicktextdocument.h \
+		../../../arm-qt/include/QtGui/QTextDocument \
+		../../../arm-qt/include/QtQuick/qquickview.h \
+		../../../arm-qt/include/QtQuick/qquickwindow.h \
+		../../../arm-qt/include/QtQuick/qsgrendererinterface.h \
+		../../../arm-qt/include/QtQuick/qsgnode.h \
+		../../../arm-qt/include/QtQuick/qsggeometry.h \
+		../../../arm-qt/include/QtCore/QRectF \
+		../../../arm-qt/include/QtQuick/qsgabstractrenderer.h \
+		../../../arm-qt/include/QtQuick/qsgengine.h \
+		../../../arm-qt/include/QtQuick/qsgflatcolormaterial.h \
+		../../../arm-qt/include/QtQuick/qsgmaterial.h \
+		../../../arm-qt/include/QtQuick/qsgimagenode.h \
+		../../../arm-qt/include/QtQuick/qsgtexture.h \
+		../../../arm-qt/include/QtQuick/qsgninepatchnode.h \
+		../../../arm-qt/include/QtQuick/qsgrectanglenode.h \
+		../../../arm-qt/include/QtQuick/qsgrendernode.h \
+		../../../arm-qt/include/QtQuick/qsgsimplematerial.h \
+		../../../arm-qt/include/QtQuick/qsgsimplerectnode.h \
+		../../../arm-qt/include/QtQuick/qsgsimpletexturenode.h \
+		../../../arm-qt/include/QtQuick/qsgtexturematerial.h \
+		../../../arm-qt/include/QtQuick/qsgtextureprovider.h \
+		../../../arm-qt/include/QtQuick/qsgvertexcolormaterial.h \
+		../../../arm-qt/include/QtQuick/qtquickversion.h \
+		../../../arm-qt/include/QtWidgets/QtWidgets \
+		../../../arm-qt/include/QtWidgets/QtWidgetsDepends \
+		../../../arm-qt/include/QtWidgets/qabstractitemdelegate.h \
+		../../../arm-qt/include/QtWidgets/qstyleoption.h \
+		../../../arm-qt/include/QtWidgets/qabstractspinbox.h \
+		../../../arm-qt/include/QtWidgets/qslider.h \
+		../../../arm-qt/include/QtWidgets/qabstractslider.h \
+		../../../arm-qt/include/QtWidgets/qstyle.h \
+		../../../arm-qt/include/QtWidgets/qtabbar.h \
+		../../../arm-qt/include/QtWidgets/qrubberband.h \
+		../../../arm-qt/include/QtWidgets/qframe.h \
+		../../../arm-qt/include/QtWidgets/qabstractitemview.h \
+		../../../arm-qt/include/QtWidgets/qabstractscrollarea.h \
+		../../../arm-qt/include/QtWidgets/qaccessiblewidget.h \
+		../../../arm-qt/include/QtWidgets/qaction.h \
+		../../../arm-qt/include/QtWidgets/qactiongroup.h \
+		../../../arm-qt/include/QtWidgets/qbuttongroup.h \
+		../../../arm-qt/include/QtWidgets/qcalendarwidget.h \
+		../../../arm-qt/include/QtWidgets/qcheckbox.h \
+		../../../arm-qt/include/QtWidgets/qcolordialog.h \
+		../../../arm-qt/include/QtWidgets/qcolormap.h \
+		../../../arm-qt/include/QtWidgets/qcolumnview.h \
+		../../../arm-qt/include/QtWidgets/qcombobox.h \
+		../../../arm-qt/include/QtWidgets/qcommandlinkbutton.h \
+		../../../arm-qt/include/QtWidgets/qcommonstyle.h \
+		../../../arm-qt/include/QtWidgets/qcompleter.h \
+		../../../arm-qt/include/QtWidgets/qdatawidgetmapper.h \
+		../../../arm-qt/include/QtWidgets/qdatetimeedit.h \
+		../../../arm-qt/include/QtWidgets/qdial.h \
+		../../../arm-qt/include/QtWidgets/qdialogbuttonbox.h \
+		../../../arm-qt/include/QtWidgets/qdirmodel.h \
+		../../../arm-qt/include/QtWidgets/qfileiconprovider.h \
+		../../../arm-qt/include/QtWidgets/qdockwidget.h \
+		../../../arm-qt/include/QtWidgets/qdrawutil.h \
+		../../../arm-qt/include/QtWidgets/qerrormessage.h \
+		../../../arm-qt/include/QtWidgets/qfiledialog.h \
+		../../../arm-qt/include/QtWidgets/qfilesystemmodel.h \
+		../../../arm-qt/include/QtWidgets/qfocusframe.h \
+		../../../arm-qt/include/QtWidgets/qfontcombobox.h \
+		../../../arm-qt/include/QtWidgets/qfontdialog.h \
+		../../../arm-qt/include/QtWidgets/qformlayout.h \
+		../../../arm-qt/include/QtWidgets/QLayout \
+		../../../arm-qt/include/QtWidgets/qgesture.h \
+		../../../arm-qt/include/QtWidgets/qgesturerecognizer.h \
+		../../../arm-qt/include/QtWidgets/qgraphicsanchorlayout.h \
+		../../../arm-qt/include/QtWidgets/qgraphicsitem.h \
+		../../../arm-qt/include/QtWidgets/qgraphicslayout.h \
+		../../../arm-qt/include/QtWidgets/qgraphicslayoutitem.h \
+		../../../arm-qt/include/QtWidgets/qgraphicseffect.h \
+		../../../arm-qt/include/QtWidgets/qgraphicsgridlayout.h \
+		../../../arm-qt/include/QtWidgets/qgraphicsitemanimation.h \
+		../../../arm-qt/include/QtWidgets/qgraphicslinearlayout.h \
+		../../../arm-qt/include/QtWidgets/qgraphicsproxywidget.h \
+		../../../arm-qt/include/QtWidgets/qgraphicswidget.h \
+		../../../arm-qt/include/QtWidgets/qgraphicsscene.h \
+		../../../arm-qt/include/QtWidgets/qgraphicssceneevent.h \
+		../../../arm-qt/include/QtWidgets/qgraphicstransform.h \
+		../../../arm-qt/include/QtGui/QVector3D \
+		../../../arm-qt/include/QtWidgets/qgraphicsview.h \
+		../../../arm-qt/include/QtWidgets/qscrollarea.h \
+		../../../arm-qt/include/QtWidgets/qgroupbox.h \
+		../../../arm-qt/include/QtWidgets/qheaderview.h \
+		../../../arm-qt/include/QtWidgets/qinputdialog.h \
+		../../../arm-qt/include/QtWidgets/qlineedit.h \
+		../../../arm-qt/include/QtWidgets/qitemdelegate.h \
+		../../../arm-qt/include/QtWidgets/qitemeditorfactory.h \
+		../../../arm-qt/include/QtWidgets/qkeyeventtransition.h \
+		../../../arm-qt/include/QtWidgets/qkeysequenceedit.h \
+		../../../arm-qt/include/QtWidgets/qlabel.h \
+		../../../arm-qt/include/QtWidgets/qlcdnumber.h \
+		../../../arm-qt/include/QtWidgets/qlistview.h \
+		../../../arm-qt/include/QtWidgets/qlistwidget.h \
+		../../../arm-qt/include/QtWidgets/qmainwindow.h \
+		../../../arm-qt/include/QtWidgets/qmdiarea.h \
+		../../../arm-qt/include/QtWidgets/qmdisubwindow.h \
+		../../../arm-qt/include/QtWidgets/qmenu.h \
+		../../../arm-qt/include/QtWidgets/qmenubar.h \
+		../../../arm-qt/include/QtWidgets/qmessagebox.h \
+		../../../arm-qt/include/QtWidgets/qmouseeventtransition.h \
+		../../../arm-qt/include/QtWidgets/qopenglwidget.h \
+		../../../arm-qt/include/QtWidgets/qplaintextedit.h \
+		../../../arm-qt/include/QtWidgets/qtextedit.h \
+		../../../arm-qt/include/QtWidgets/qprogressbar.h \
+		../../../arm-qt/include/QtWidgets/qprogressdialog.h \
+		../../../arm-qt/include/QtWidgets/qproxystyle.h \
+		../../../arm-qt/include/QtWidgets/QCommonStyle \
+		../../../arm-qt/include/QtWidgets/qradiobutton.h \
+		../../../arm-qt/include/QtWidgets/qscrollbar.h \
+		../../../arm-qt/include/QtWidgets/qscroller.h \
+		../../../arm-qt/include/QtCore/QPointF \
+		../../../arm-qt/include/QtWidgets/QScrollerProperties \
+		../../../arm-qt/include/QtWidgets/qscrollerproperties.h \
+		../../../arm-qt/include/QtWidgets/qshortcut.h \
+		../../../arm-qt/include/QtWidgets/qsizegrip.h \
+		../../../arm-qt/include/QtWidgets/qspinbox.h \
+		../../../arm-qt/include/QtWidgets/qsplashscreen.h \
+		../../../arm-qt/include/QtWidgets/qsplitter.h \
+		../../../arm-qt/include/QtWidgets/qstackedlayout.h \
+		../../../arm-qt/include/QtWidgets/qstackedwidget.h \
+		../../../arm-qt/include/QtWidgets/qstatusbar.h \
+		../../../arm-qt/include/QtWidgets/qstyleditemdelegate.h \
+		../../../arm-qt/include/QtWidgets/qstylefactory.h \
+		../../../arm-qt/include/QtWidgets/qstylepainter.h \
+		../../../arm-qt/include/QtWidgets/qstyleplugin.h \
+		../../../arm-qt/include/QtWidgets/qsystemtrayicon.h \
+		../../../arm-qt/include/QtWidgets/qtableview.h \
+		../../../arm-qt/include/QtWidgets/qtablewidget.h \
+		../../../arm-qt/include/QtWidgets/qtextbrowser.h \
+		../../../arm-qt/include/QtWidgets/qtoolbar.h \
+		../../../arm-qt/include/QtWidgets/qtoolbox.h \
+		../../../arm-qt/include/QtWidgets/qtoolbutton.h \
+		../../../arm-qt/include/QtWidgets/qtooltip.h \
+		../../../arm-qt/include/QtWidgets/qtreeview.h \
+		../../../arm-qt/include/QtWidgets/qtreewidget.h \
+		../../../arm-qt/include/QtWidgets/qtreewidgetitemiterator.h \
+		../../../arm-qt/include/QtWidgets/qundogroup.h \
+		../../../arm-qt/include/QtWidgets/qundostack.h \
+		../../../arm-qt/include/QtWidgets/qundoview.h \
+		../../../arm-qt/include/QtWidgets/qwhatsthis.h \
+		../../../arm-qt/include/QtWidgets/qwidgetaction.h \
+		../../../arm-qt/include/QtWidgets/qwizard.h \
+		../../../arm-qt/include/QtWidgets/qtwidgetsversion.h \
+		../../../arm-qt/include/QtQuickWidgets/qtquickwidgetsglobal.h \
+		../../../arm-qt/include/QtQuickWidgets/qquickwidget.h \
+		../../../arm-qt/include/QtQuickWidgets/qtquickwidgetsversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog_admin.o dialog_admin.cpp
 
 face_api.o: face_api.cpp face_api.h \
@@ -4537,443 +5309,8 @@ form.o: form.cpp form.h \
 		../../../arm-qt/include/QtGui/qguiapplication.h \
 		../../../arm-qt/include/QtGui/qinputmethod.h \
 		../../../arm-qt/include/QtWidgets/QTabWidget \
-		register.h \
-		../../../arm-qt/include/QtQuickWidgets/QtQuickWidgets \
-		../../../arm-qt/include/QtQuickWidgets/QtQuickWidgetsDepends \
-		../../../arm-qt/include/QtCore/QtCore \
-		../../../arm-qt/include/QtCore/QtCoreDepends \
-		../../../arm-qt/include/QtCore/qabstractanimation.h \
-		../../../arm-qt/include/QtCore/qabstracteventdispatcher.h \
-		../../../arm-qt/include/QtCore/qabstractitemmodel.h \
-		../../../arm-qt/include/QtCore/qabstractnativeeventfilter.h \
-		../../../arm-qt/include/QtCore/qabstractproxymodel.h \
-		../../../arm-qt/include/QtCore/qabstractstate.h \
-		../../../arm-qt/include/QtCore/qabstracttransition.h \
-		../../../arm-qt/include/QtCore/qanimationgroup.h \
-		../../../arm-qt/include/QtCore/qarraydataops.h \
-		../../../arm-qt/include/QtCore/qarraydatapointer.h \
-		../../../arm-qt/include/QtCore/qbasictimer.h \
-		../../../arm-qt/include/QtCore/qbitarray.h \
-		../../../arm-qt/include/QtCore/qbuffer.h \
-		../../../arm-qt/include/QtCore/qbytearraymatcher.h \
-		../../../arm-qt/include/QtCore/qcache.h \
-		../../../arm-qt/include/QtCore/qcborarray.h \
-		../../../arm-qt/include/QtCore/qcborvalue.h \
-		../../../arm-qt/include/QtCore/qdatetime.h \
-		../../../arm-qt/include/QtCore/qcborcommon.h \
-		../../../arm-qt/include/QtCore/qregularexpression.h \
-		../../../arm-qt/include/QtCore/quuid.h \
-		../../../arm-qt/include/QtCore/qcbormap.h \
-		../../../arm-qt/include/QtCore/qcborstream.h \
-		../../../arm-qt/include/QtCore/qfloat16.h \
-		../../../arm-qt/include/QtCore/qcollator.h \
-		../../../arm-qt/include/QtCore/qcommandlineoption.h \
-		../../../arm-qt/include/QtCore/qcommandlineparser.h \
-		../../../arm-qt/include/QtCore/qcryptographichash.h \
-		../../../arm-qt/include/QtCore/qdeadlinetimer.h \
-		../../../arm-qt/include/QtCore/qelapsedtimer.h \
-		../../../arm-qt/include/QtCore/qdir.h \
-		../../../arm-qt/include/QtCore/qfileinfo.h \
-		../../../arm-qt/include/QtCore/qdiriterator.h \
-		../../../arm-qt/include/QtCore/qeasingcurve.h \
-		../../../arm-qt/include/QtCore/qendian.h \
-		../../../arm-qt/include/QtCore/qeventtransition.h \
-		../../../arm-qt/include/QtCore/qexception.h \
-		../../../arm-qt/include/QtCore/qfactoryinterface.h \
-		../../../arm-qt/include/QtCore/qfileselector.h \
-		../../../arm-qt/include/QtCore/QStringList \
-		../../../arm-qt/include/QtCore/qfilesystemwatcher.h \
-		../../../arm-qt/include/QtCore/qfinalstate.h \
-		../../../arm-qt/include/QtCore/qfuture.h \
-		../../../arm-qt/include/QtCore/qfutureinterface.h \
-		../../../arm-qt/include/QtCore/qrunnable.h \
-		../../../arm-qt/include/QtCore/qresultstore.h \
-		../../../arm-qt/include/QtCore/qfuturesynchronizer.h \
-		../../../arm-qt/include/QtCore/qfuturewatcher.h \
-		../../../arm-qt/include/QtCore/qhistorystate.h \
-		../../../arm-qt/include/QtCore/qidentityproxymodel.h \
-		../../../arm-qt/include/QtCore/qisenum.h \
-		../../../arm-qt/include/QtCore/qitemselectionmodel.h \
-		../../../arm-qt/include/QtCore/qjsonarray.h \
-		../../../arm-qt/include/QtCore/qjsonvalue.h \
-		../../../arm-qt/include/QtCore/qjsondocument.h \
-		../../../arm-qt/include/QtCore/qjsonobject.h \
-		../../../arm-qt/include/QtCore/qlibrary.h \
-		../../../arm-qt/include/QtCore/qlibraryinfo.h \
-		../../../arm-qt/include/QtCore/qversionnumber.h \
-		../../../arm-qt/include/QtCore/qlinkedlist.h \
-		../../../arm-qt/include/QtCore/qlockfile.h \
-		../../../arm-qt/include/QtCore/qloggingcategory.h \
-		../../../arm-qt/include/QtCore/qmath.h \
-		../../../arm-qt/include/QtCore/qmessageauthenticationcode.h \
-		../../../arm-qt/include/QtCore/qmimedata.h \
-		../../../arm-qt/include/QtCore/qmimedatabase.h \
-		../../../arm-qt/include/QtCore/qmimetype.h \
-		../../../arm-qt/include/QtCore/qobjectcleanuphandler.h \
-		../../../arm-qt/include/QtCore/qoperatingsystemversion.h \
-		../../../arm-qt/include/QtCore/qparallelanimationgroup.h \
-		../../../arm-qt/include/QtCore/qpauseanimation.h \
-		../../../arm-qt/include/QtCore/qplugin.h \
-		../../../arm-qt/include/QtCore/qpointer.h \
-		../../../arm-qt/include/QtCore/qpluginloader.h \
-		../../../arm-qt/include/QtCore/qprocess.h \
-		../../../arm-qt/include/QtCore/qpropertyanimation.h \
-		../../../arm-qt/include/QtCore/qvariantanimation.h \
-		../../../arm-qt/include/QtCore/qqueue.h \
-		../../../arm-qt/include/QtCore/qrandom.h \
-		../../../arm-qt/include/QtCore/qreadwritelock.h \
-		../../../arm-qt/include/QtCore/qresource.h \
-		../../../arm-qt/include/QtCore/qsavefile.h \
-		../../../arm-qt/include/QtCore/qscopedvaluerollback.h \
-		../../../arm-qt/include/QtCore/qscopeguard.h \
-		../../../arm-qt/include/QtCore/qsemaphore.h \
-		../../../arm-qt/include/QtCore/qsequentialanimationgroup.h \
-		../../../arm-qt/include/QtCore/qsettings.h \
-		../../../arm-qt/include/QtCore/qsharedmemory.h \
-		../../../arm-qt/include/QtCore/qsignalmapper.h \
-		../../../arm-qt/include/QtCore/qsignaltransition.h \
-		../../../arm-qt/include/QtCore/qsocketnotifier.h \
-		../../../arm-qt/include/QtCore/qsortfilterproxymodel.h \
-		../../../arm-qt/include/QtCore/qstack.h \
-		../../../arm-qt/include/QtCore/qstandardpaths.h \
-		../../../arm-qt/include/QtCore/qstate.h \
-		../../../arm-qt/include/QtCore/qstatemachine.h \
-		../../../arm-qt/include/QtCore/qstorageinfo.h \
-		../../../arm-qt/include/QtCore/qstringlistmodel.h \
-		../../../arm-qt/include/QtCore/qsystemsemaphore.h \
-		../../../arm-qt/include/QtCore/qtemporarydir.h \
-		../../../arm-qt/include/QtCore/qtemporaryfile.h \
-		../../../arm-qt/include/QtCore/qtextboundaryfinder.h \
-		../../../arm-qt/include/QtCore/qtextcodec.h \
-		../../../arm-qt/include/QtCore/qthreadpool.h \
-		../../../arm-qt/include/QtCore/qthreadstorage.h \
-		../../../arm-qt/include/QtCore/qtimeline.h \
-		../../../arm-qt/include/QtCore/qtimer.h \
-		../../../arm-qt/include/QtCore/qtimezone.h \
-		../../../arm-qt/include/QtCore/qtranslator.h \
-		../../../arm-qt/include/QtCore/qtypetraits.h \
-		../../../arm-qt/include/QtCore/qwaitcondition.h \
-		../../../arm-qt/include/QtCore/qwineventnotifier.h \
-		../../../arm-qt/include/QtCore/qxmlstream.h \
-		../../../arm-qt/include/QtCore/qtcoreversion.h \
-		../../../arm-qt/include/QtGui/QtGui \
-		../../../arm-qt/include/QtGui/QtGuiDepends \
-		../../../arm-qt/include/QtGui/qabstracttextdocumentlayout.h \
-		../../../arm-qt/include/QtGui/qtextlayout.h \
-		../../../arm-qt/include/QtGui/qtextformat.h \
-		../../../arm-qt/include/QtGui/qpen.h \
-		../../../arm-qt/include/QtGui/qtextoption.h \
-		../../../arm-qt/include/QtGui/qglyphrun.h \
-		../../../arm-qt/include/QtGui/qrawfont.h \
-		../../../arm-qt/include/QtGui/qfontdatabase.h \
-		../../../arm-qt/include/QtGui/qtextcursor.h \
-		../../../arm-qt/include/QtGui/qtextdocument.h \
-		../../../arm-qt/include/QtGui/qaccessible.h \
-		../../../arm-qt/include/QtGui/qaccessiblebridge.h \
-		../../../arm-qt/include/QtGui/qaccessibleobject.h \
-		../../../arm-qt/include/QtGui/qaccessibleplugin.h \
-		../../../arm-qt/include/QtGui/qbackingstore.h \
-		../../../arm-qt/include/QtGui/qbitmap.h \
-		../../../arm-qt/include/QtGui/qclipboard.h \
-		../../../arm-qt/include/QtGui/qdesktopservices.h \
-		../../../arm-qt/include/QtGui/qdrag.h \
-		../../../arm-qt/include/QtGui/qgenericplugin.h \
-		../../../arm-qt/include/QtGui/qgenericpluginfactory.h \
-		../../../arm-qt/include/QtGui/qiconengine.h \
-		../../../arm-qt/include/QtGui/qiconengineplugin.h \
-		../../../arm-qt/include/QtGui/qimageiohandler.h \
-		../../../arm-qt/include/QtGui/qimagereader.h \
-		../../../arm-qt/include/QtGui/qimagewriter.h \
-		../../../arm-qt/include/QtGui/qmovie.h \
-		../../../arm-qt/include/QtGui/qoffscreensurface.h \
-		../../../arm-qt/include/QtGui/qopenglbuffer.h \
-		../../../arm-qt/include/QtGui/qopenglcontext.h \
-		../../../arm-qt/include/QtCore/QScopedPointer \
-		../../../arm-qt/include/QtGui/QSurfaceFormat \
-		../../../arm-qt/include/QtGui/qopenglversionfunctions.h \
-		../../../arm-qt/include/QtGui/qopengldebug.h \
-		../../../arm-qt/include/QtGui/qopenglextrafunctions.h \
-		../../../arm-qt/include/QtGui/qopenglfunctions.h \
-		../../../arm-qt/include/QtGui/qopenglframebufferobject.h \
-		../../../arm-qt/include/QtGui/qopenglpaintdevice.h \
-		../../../arm-qt/include/QtGui/qopenglpixeltransferoptions.h \
-		../../../arm-qt/include/QtCore/QSharedDataPointer \
-		../../../arm-qt/include/QtGui/qopenglshaderprogram.h \
-		../../../arm-qt/include/QtGui/qopengltexture.h \
-		../../../arm-qt/include/QtGui/qopengltextureblitter.h \
-		../../../arm-qt/include/QtGui/QMatrix3x3 \
-		../../../arm-qt/include/QtGui/qopengltimerquery.h \
-		../../../arm-qt/include/QtGui/qopenglvertexarrayobject.h \
-		../../../arm-qt/include/QtGui/qopenglwindow.h \
-		../../../arm-qt/include/QtGui/QPaintDeviceWindow \
-		../../../arm-qt/include/QtGui/qpaintdevicewindow.h \
-		../../../arm-qt/include/QtGui/QWindow \
-		../../../arm-qt/include/QtGui/QPaintDevice \
-		../../../arm-qt/include/QtGui/QOpenGLContext \
-		../../../arm-qt/include/QtGui/QImage \
-		../../../arm-qt/include/QtGui/qpagedpaintdevice.h \
-		../../../arm-qt/include/QtGui/qpagelayout.h \
-		../../../arm-qt/include/QtGui/qpagesize.h \
-		../../../arm-qt/include/QtGui/qpaintengine.h \
-		../../../arm-qt/include/QtGui/qpainter.h \
-		../../../arm-qt/include/QtGui/qpdfwriter.h \
-		../../../arm-qt/include/QtGui/qpicture.h \
-		../../../arm-qt/include/QtGui/qpictureformatplugin.h \
-		../../../arm-qt/include/QtGui/qpixmapcache.h \
-		../../../arm-qt/include/QtGui/qrasterwindow.h \
-		../../../arm-qt/include/QtGui/qscreen.h \
-		../../../arm-qt/include/QtCore/QList \
-		../../../arm-qt/include/QtCore/QSize \
-		../../../arm-qt/include/QtCore/QSizeF \
-		../../../arm-qt/include/QtGui/QTransform \
-		../../../arm-qt/include/QtGui/qsessionmanager.h \
-		../../../arm-qt/include/QtGui/qstandarditemmodel.h \
-		../../../arm-qt/include/QtGui/qstatictext.h \
-		../../../arm-qt/include/QtGui/qstylehints.h \
-		../../../arm-qt/include/QtGui/qsyntaxhighlighter.h \
-		../../../arm-qt/include/QtGui/qtextobject.h \
-		../../../arm-qt/include/QtGui/qtextdocumentfragment.h \
-		../../../arm-qt/include/QtGui/qtextdocumentwriter.h \
-		../../../arm-qt/include/QtGui/qtextlist.h \
-		../../../arm-qt/include/QtGui/qtexttable.h \
-		../../../arm-qt/include/QtGui/qvalidator.h \
-		../../../arm-qt/include/QtGui/qtguiversion.h \
-		../../../arm-qt/include/QtQml/QtQml \
-		../../../arm-qt/include/QtQml/QtQmlDepends \
-		../../../arm-qt/include/QtNetwork/QtNetwork \
-		../../../arm-qt/include/QtNetwork/QtNetworkDepends \
-		../../../arm-qt/include/QtNetwork/qabstractnetworkcache.h \
-		../../../arm-qt/include/QtNetwork/qnetworkrequest.h \
-		../../../arm-qt/include/QtCore/QString \
-		../../../arm-qt/include/QtCore/QUrl \
-		../../../arm-qt/include/QtNetwork/qabstractsocket.h \
-		../../../arm-qt/include/QtNetwork/qauthenticator.h \
-		../../../arm-qt/include/QtNetwork/qdnslookup.h \
-		../../../arm-qt/include/QtNetwork/qdtls.h \
-		../../../arm-qt/include/QtNetwork/qsslsocket.h \
-		../../../arm-qt/include/QtNetwork/qtcpsocket.h \
-		../../../arm-qt/include/QtNetwork/qsslerror.h \
-		../../../arm-qt/include/QtNetwork/qsslcertificate.h \
-		../../../arm-qt/include/QtNetwork/qssl.h \
-		../../../arm-qt/include/QtCore/QFlags \
-		../../../arm-qt/include/QtNetwork/qhostaddress.h \
-		../../../arm-qt/include/QtNetwork/qhostinfo.h \
-		../../../arm-qt/include/QtNetwork/qhstspolicy.h \
-		../../../arm-qt/include/QtNetwork/qhttpmultipart.h \
-		../../../arm-qt/include/QtCore/QByteArray \
-		../../../arm-qt/include/QtCore/QIODevice \
-		../../../arm-qt/include/QtNetwork/QNetworkRequest \
-		../../../arm-qt/include/QtNetwork/qlocalserver.h \
-		../../../arm-qt/include/QtNetwork/qlocalsocket.h \
-		../../../arm-qt/include/QtNetwork/qnetworkaccessmanager.h \
-		../../../arm-qt/include/QtCore/QVector \
-		../../../arm-qt/include/QtNetwork/QSslConfiguration \
-		../../../arm-qt/include/QtNetwork/qsslconfiguration.h \
-		../../../arm-qt/include/QtNetwork/QSslPreSharedKeyAuthenticator \
-		../../../arm-qt/include/QtNetwork/qsslpresharedkeyauthenticator.h \
-		../../../arm-qt/include/QtCore/QMetaType \
-		../../../arm-qt/include/QtNetwork/qnetworkconfigmanager.h \
-		../../../arm-qt/include/QtNetwork/qnetworkconfiguration.h \
-		../../../arm-qt/include/QtNetwork/qnetworkcookie.h \
-		../../../arm-qt/include/QtNetwork/qnetworkcookiejar.h \
-		../../../arm-qt/include/QtNetwork/qnetworkdatagram.h \
-		../../../arm-qt/include/QtNetwork/qnetworkdiskcache.h \
-		../../../arm-qt/include/QtNetwork/qnetworkinterface.h \
-		../../../arm-qt/include/QtNetwork/qnetworkproxy.h \
-		../../../arm-qt/include/QtNetwork/qnetworkreply.h \
-		../../../arm-qt/include/QtNetwork/QNetworkAccessManager \
-		../../../arm-qt/include/QtNetwork/qnetworksession.h \
-		../../../arm-qt/include/QtNetwork/qpassworddigestor.h \
-		../../../arm-qt/include/QtCore/QCryptographicHash \
-		../../../arm-qt/include/QtNetwork/qsctpserver.h \
-		../../../arm-qt/include/QtNetwork/qtcpserver.h \
-		../../../arm-qt/include/QtNetwork/qsctpsocket.h \
-		../../../arm-qt/include/QtNetwork/qsslcertificateextension.h \
-		../../../arm-qt/include/QtNetwork/qsslcipher.h \
-		../../../arm-qt/include/QtNetwork/qssldiffiehellmanparameters.h \
-		../../../arm-qt/include/QtNetwork/qsslellipticcurve.h \
-		../../../arm-qt/include/QtCore/QHash \
-		../../../arm-qt/include/QtNetwork/qsslkey.h \
-		../../../arm-qt/include/QtNetwork/qudpsocket.h \
-		../../../arm-qt/include/QtNetwork/qtnetworkversion.h \
-		../../../arm-qt/include/QtQml/qjsengine.h \
-		../../../arm-qt/include/QtQml/qjsvalue.h \
-		../../../arm-qt/include/QtQml/qjsvalueiterator.h \
-		../../../arm-qt/include/QtQml/qqmlabstracturlinterceptor.h \
-		../../../arm-qt/include/QtQml/qqmlapplicationengine.h \
-		../../../arm-qt/include/QtQml/qqmlengine.h \
-		../../../arm-qt/include/QtQml/qqmlerror.h \
-		../../../arm-qt/include/QtQml/qqmlcomponent.h \
-		../../../arm-qt/include/QtQml/qqmlcontext.h \
-		../../../arm-qt/include/QtQml/qqmlexpression.h \
-		../../../arm-qt/include/QtQml/qqmlscriptstring.h \
-		../../../arm-qt/include/QtQml/qqmlextensioninterface.h \
-		../../../arm-qt/include/QtQml/qqmlextensionplugin.h \
-		../../../arm-qt/include/QtQml/qqmlfile.h \
-		../../../arm-qt/include/QtQml/qqmlfileselector.h \
-		../../../arm-qt/include/QtQml/QQmlEngine \
-		../../../arm-qt/include/QtQml/qqmlincubator.h \
-		../../../arm-qt/include/QtQml/qqmlinfo.h \
-		../../../arm-qt/include/QtQml/qqmlnetworkaccessmanagerfactory.h \
-		../../../arm-qt/include/QtQml/qqmlproperty.h \
-		../../../arm-qt/include/QtQml/qqmlpropertymap.h \
-		../../../arm-qt/include/QtQml/qtqmlversion.h \
-		../../../arm-qt/include/QtQuick/QtQuick \
-		../../../arm-qt/include/QtQuick/QtQuickDepends \
-		../../../arm-qt/include/QtQuick/qquickframebufferobject.h \
-		../../../arm-qt/include/QtQuick/QQuickItem \
-		../../../arm-qt/include/QtQuick/qquickitem.h \
-		../../../arm-qt/include/QtQuick/qquickimageprovider.h \
-		../../../arm-qt/include/QtQuick/qquickitemgrabresult.h \
-		../../../arm-qt/include/QtQml/QJSValue \
-		../../../arm-qt/include/QtQuick/qquickpainteditem.h \
-		../../../arm-qt/include/QtQuick/qquickrendercontrol.h \
-		../../../arm-qt/include/QtQuick/qquicktextdocument.h \
-		../../../arm-qt/include/QtGui/QTextDocument \
-		../../../arm-qt/include/QtQuick/qquickview.h \
-		../../../arm-qt/include/QtQuick/qsgabstractrenderer.h \
-		../../../arm-qt/include/QtQuick/qsgengine.h \
-		../../../arm-qt/include/QtQuick/qsgflatcolormaterial.h \
-		../../../arm-qt/include/QtQuick/qsgmaterial.h \
-		../../../arm-qt/include/QtQuick/qsgimagenode.h \
-		../../../arm-qt/include/QtQuick/qsgtexture.h \
-		../../../arm-qt/include/QtQuick/qsgninepatchnode.h \
-		../../../arm-qt/include/QtQuick/qsgrectanglenode.h \
-		../../../arm-qt/include/QtQuick/qsgrendernode.h \
-		../../../arm-qt/include/QtQuick/qsgsimplematerial.h \
-		../../../arm-qt/include/QtQuick/qsgsimplerectnode.h \
-		../../../arm-qt/include/QtQuick/qsgsimpletexturenode.h \
-		../../../arm-qt/include/QtQuick/qsgtexturematerial.h \
-		../../../arm-qt/include/QtQuick/qsgtextureprovider.h \
-		../../../arm-qt/include/QtQuick/qsgvertexcolormaterial.h \
-		../../../arm-qt/include/QtQuick/qtquickversion.h \
-		../../../arm-qt/include/QtWidgets/QtWidgets \
-		../../../arm-qt/include/QtWidgets/QtWidgetsDepends \
-		../../../arm-qt/include/QtWidgets/qabstractbutton.h \
-		../../../arm-qt/include/QtWidgets/qabstractitemdelegate.h \
-		../../../arm-qt/include/QtWidgets/qstyleoption.h \
-		../../../arm-qt/include/QtWidgets/qabstractspinbox.h \
-		../../../arm-qt/include/QtWidgets/qslider.h \
-		../../../arm-qt/include/QtWidgets/qabstractslider.h \
-		../../../arm-qt/include/QtWidgets/qstyle.h \
-		../../../arm-qt/include/QtWidgets/qtabbar.h \
-		../../../arm-qt/include/QtWidgets/qrubberband.h \
-		../../../arm-qt/include/QtWidgets/qframe.h \
-		../../../arm-qt/include/QtWidgets/qabstractitemview.h \
-		../../../arm-qt/include/QtWidgets/qabstractscrollarea.h \
-		../../../arm-qt/include/QtWidgets/qaccessiblewidget.h \
-		../../../arm-qt/include/QtWidgets/qaction.h \
-		../../../arm-qt/include/QtWidgets/qactiongroup.h \
-		../../../arm-qt/include/QtWidgets/qboxlayout.h \
-		../../../arm-qt/include/QtWidgets/qlayout.h \
-		../../../arm-qt/include/QtWidgets/qlayoutitem.h \
-		../../../arm-qt/include/QtWidgets/qgridlayout.h \
-		../../../arm-qt/include/QtWidgets/qbuttongroup.h \
-		../../../arm-qt/include/QtWidgets/qcalendarwidget.h \
-		../../../arm-qt/include/QtWidgets/qcheckbox.h \
-		../../../arm-qt/include/QtWidgets/qcolordialog.h \
-		../../../arm-qt/include/QtWidgets/qcolormap.h \
-		../../../arm-qt/include/QtWidgets/qcolumnview.h \
-		../../../arm-qt/include/QtWidgets/qcombobox.h \
-		../../../arm-qt/include/QtWidgets/qcommandlinkbutton.h \
-		../../../arm-qt/include/QtWidgets/qpushbutton.h \
-		../../../arm-qt/include/QtWidgets/qcommonstyle.h \
-		../../../arm-qt/include/QtWidgets/qcompleter.h \
-		../../../arm-qt/include/QtWidgets/qdatawidgetmapper.h \
-		../../../arm-qt/include/QtWidgets/qdatetimeedit.h \
-		../../../arm-qt/include/QtWidgets/qdial.h \
-		../../../arm-qt/include/QtWidgets/qdialogbuttonbox.h \
-		../../../arm-qt/include/QtWidgets/qdirmodel.h \
-		../../../arm-qt/include/QtWidgets/qfileiconprovider.h \
-		../../../arm-qt/include/QtWidgets/qdockwidget.h \
-		../../../arm-qt/include/QtWidgets/qdrawutil.h \
-		../../../arm-qt/include/QtWidgets/qerrormessage.h \
-		../../../arm-qt/include/QtWidgets/qfiledialog.h \
-		../../../arm-qt/include/QtWidgets/qfilesystemmodel.h \
-		../../../arm-qt/include/QtWidgets/qfocusframe.h \
-		../../../arm-qt/include/QtWidgets/qfontcombobox.h \
-		../../../arm-qt/include/QtWidgets/qfontdialog.h \
-		../../../arm-qt/include/QtWidgets/qformlayout.h \
-		../../../arm-qt/include/QtWidgets/QLayout \
-		../../../arm-qt/include/QtWidgets/qgesture.h \
-		../../../arm-qt/include/QtWidgets/qgesturerecognizer.h \
-		../../../arm-qt/include/QtWidgets/qgraphicsanchorlayout.h \
-		../../../arm-qt/include/QtWidgets/qgraphicsitem.h \
-		../../../arm-qt/include/QtWidgets/qgraphicslayout.h \
-		../../../arm-qt/include/QtWidgets/qgraphicslayoutitem.h \
-		../../../arm-qt/include/QtWidgets/qgraphicseffect.h \
-		../../../arm-qt/include/QtWidgets/qgraphicsgridlayout.h \
-		../../../arm-qt/include/QtWidgets/qgraphicsitemanimation.h \
-		../../../arm-qt/include/QtWidgets/qgraphicslinearlayout.h \
-		../../../arm-qt/include/QtWidgets/qgraphicsproxywidget.h \
-		../../../arm-qt/include/QtWidgets/qgraphicswidget.h \
-		../../../arm-qt/include/QtWidgets/qgraphicsscene.h \
-		../../../arm-qt/include/QtWidgets/qgraphicssceneevent.h \
-		../../../arm-qt/include/QtWidgets/qgraphicstransform.h \
-		../../../arm-qt/include/QtGui/QVector3D \
-		../../../arm-qt/include/QtWidgets/qgraphicsview.h \
-		../../../arm-qt/include/QtWidgets/qscrollarea.h \
-		../../../arm-qt/include/QtWidgets/qgroupbox.h \
-		../../../arm-qt/include/QtWidgets/qheaderview.h \
-		../../../arm-qt/include/QtWidgets/qinputdialog.h \
-		../../../arm-qt/include/QtWidgets/qlineedit.h \
-		../../../arm-qt/include/QtWidgets/qitemdelegate.h \
-		../../../arm-qt/include/QtWidgets/qitemeditorfactory.h \
-		../../../arm-qt/include/QtWidgets/qkeyeventtransition.h \
-		../../../arm-qt/include/QtWidgets/qkeysequenceedit.h \
-		../../../arm-qt/include/QtWidgets/qlabel.h \
-		../../../arm-qt/include/QtWidgets/qlcdnumber.h \
-		../../../arm-qt/include/QtWidgets/qlistview.h \
-		../../../arm-qt/include/QtWidgets/qlistwidget.h \
-		../../../arm-qt/include/QtWidgets/qmdiarea.h \
-		../../../arm-qt/include/QtWidgets/qmdisubwindow.h \
-		../../../arm-qt/include/QtWidgets/qmenu.h \
-		../../../arm-qt/include/QtWidgets/qmenubar.h \
-		../../../arm-qt/include/QtWidgets/qmouseeventtransition.h \
-		../../../arm-qt/include/QtWidgets/qopenglwidget.h \
-		../../../arm-qt/include/QtWidgets/qplaintextedit.h \
-		../../../arm-qt/include/QtWidgets/qtextedit.h \
-		../../../arm-qt/include/QtWidgets/qprogressbar.h \
-		../../../arm-qt/include/QtWidgets/qprogressdialog.h \
-		../../../arm-qt/include/QtWidgets/qproxystyle.h \
-		../../../arm-qt/include/QtWidgets/QCommonStyle \
-		../../../arm-qt/include/QtWidgets/qradiobutton.h \
-		../../../arm-qt/include/QtWidgets/qscrollbar.h \
-		../../../arm-qt/include/QtWidgets/qscroller.h \
-		../../../arm-qt/include/QtCore/QPointF \
-		../../../arm-qt/include/QtWidgets/QScrollerProperties \
-		../../../arm-qt/include/QtWidgets/qscrollerproperties.h \
-		../../../arm-qt/include/QtWidgets/qshortcut.h \
-		../../../arm-qt/include/QtWidgets/qsizegrip.h \
-		../../../arm-qt/include/QtWidgets/qspinbox.h \
-		../../../arm-qt/include/QtWidgets/qsplashscreen.h \
-		../../../arm-qt/include/QtWidgets/qsplitter.h \
-		../../../arm-qt/include/QtWidgets/qstackedlayout.h \
-		../../../arm-qt/include/QtWidgets/qstackedwidget.h \
-		../../../arm-qt/include/QtWidgets/qstatusbar.h \
-		../../../arm-qt/include/QtWidgets/qstyleditemdelegate.h \
-		../../../arm-qt/include/QtWidgets/qstylefactory.h \
-		../../../arm-qt/include/QtWidgets/qstylepainter.h \
-		../../../arm-qt/include/QtWidgets/qstyleplugin.h \
-		../../../arm-qt/include/QtWidgets/qsystemtrayicon.h \
-		../../../arm-qt/include/QtWidgets/qtableview.h \
-		../../../arm-qt/include/QtWidgets/qtablewidget.h \
-		../../../arm-qt/include/QtWidgets/qtextbrowser.h \
-		../../../arm-qt/include/QtWidgets/qtoolbar.h \
-		../../../arm-qt/include/QtWidgets/qtoolbox.h \
-		../../../arm-qt/include/QtWidgets/qtoolbutton.h \
-		../../../arm-qt/include/QtWidgets/qtooltip.h \
-		../../../arm-qt/include/QtWidgets/qtreeview.h \
-		../../../arm-qt/include/QtWidgets/qtreewidget.h \
-		../../../arm-qt/include/QtWidgets/qtreewidgetitemiterator.h \
-		../../../arm-qt/include/QtWidgets/qundogroup.h \
-		../../../arm-qt/include/QtWidgets/qundostack.h \
-		../../../arm-qt/include/QtWidgets/qundoview.h \
-		../../../arm-qt/include/QtWidgets/qwhatsthis.h \
-		../../../arm-qt/include/QtWidgets/qwidgetaction.h \
-		../../../arm-qt/include/QtWidgets/qwizard.h \
-		../../../arm-qt/include/QtWidgets/qtwidgetsversion.h \
-		../../../arm-qt/include/QtQuickWidgets/qtquickwidgetsversion.h
+		widget_login_page.h \
+		widget_system.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o form.o form.cpp
 
 main.o: main.cpp faceattendence.h \
@@ -6007,6 +6344,59 @@ faceattendence.o: faceattendence.cpp faceattendence.h \
 		../../../arm-qt/include/QtCore/qjsonarray.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o faceattendence.o faceattendence.cpp
 
+netonlinechecker.o: netonlinechecker.cpp netonlinechecker.h \
+		../../../arm-qt/include/QtCore/QObject \
+		../../../arm-qt/include/QtCore/qobject.h \
+		../../../arm-qt/include/QtCore/qobjectdefs.h \
+		../../../arm-qt/include/QtCore/qnamespace.h \
+		../../../arm-qt/include/QtCore/qglobal.h \
+		../../../arm-qt/include/QtCore/qconfig-bootstrapped.h \
+		../../../arm-qt/include/QtCore/qconfig.h \
+		../../../arm-qt/include/QtCore/qtcore-config.h \
+		../../../arm-qt/include/QtCore/qsystemdetection.h \
+		../../../arm-qt/include/QtCore/qprocessordetection.h \
+		../../../arm-qt/include/QtCore/qcompilerdetection.h \
+		../../../arm-qt/include/QtCore/qtypeinfo.h \
+		../../../arm-qt/include/QtCore/qsysinfo.h \
+		../../../arm-qt/include/QtCore/qlogging.h \
+		../../../arm-qt/include/QtCore/qflags.h \
+		../../../arm-qt/include/QtCore/qatomic.h \
+		../../../arm-qt/include/QtCore/qbasicatomic.h \
+		../../../arm-qt/include/QtCore/qatomic_bootstrap.h \
+		../../../arm-qt/include/QtCore/qgenericatomic.h \
+		../../../arm-qt/include/QtCore/qatomic_cxx11.h \
+		../../../arm-qt/include/QtCore/qatomic_msvc.h \
+		../../../arm-qt/include/QtCore/qglobalstatic.h \
+		../../../arm-qt/include/QtCore/qmutex.h \
+		../../../arm-qt/include/QtCore/qnumeric.h \
+		../../../arm-qt/include/QtCore/qversiontagging.h \
+		../../../arm-qt/include/QtCore/qobjectdefs_impl.h \
+		../../../arm-qt/include/QtCore/qstring.h \
+		../../../arm-qt/include/QtCore/qchar.h \
+		../../../arm-qt/include/QtCore/qbytearray.h \
+		../../../arm-qt/include/QtCore/qrefcount.h \
+		../../../arm-qt/include/QtCore/qarraydata.h \
+		../../../arm-qt/include/QtCore/qstringliteral.h \
+		../../../arm-qt/include/QtCore/qstringalgorithms.h \
+		../../../arm-qt/include/QtCore/qstringview.h \
+		../../../arm-qt/include/QtCore/qstringbuilder.h \
+		../../../arm-qt/include/QtCore/qlist.h \
+		../../../arm-qt/include/QtCore/qalgorithms.h \
+		../../../arm-qt/include/QtCore/qiterator.h \
+		../../../arm-qt/include/QtCore/qhashfunctions.h \
+		../../../arm-qt/include/QtCore/qpair.h \
+		../../../arm-qt/include/QtCore/qbytearraylist.h \
+		../../../arm-qt/include/QtCore/qstringlist.h \
+		../../../arm-qt/include/QtCore/qregexp.h \
+		../../../arm-qt/include/QtCore/qstringmatcher.h \
+		../../../arm-qt/include/QtCore/qcoreevent.h \
+		../../../arm-qt/include/QtCore/qscopedpointer.h \
+		../../../arm-qt/include/QtCore/qmetatype.h \
+		../../../arm-qt/include/QtCore/qvarlengtharray.h \
+		../../../arm-qt/include/QtCore/qcontainerfwd.h \
+		../../../arm-qt/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o netonlinechecker.o netonlinechecker.cpp
+
 record.o: record.cpp record.h \
 		../../../arm-qt/include/QtWidgets/QWidget \
 		../../../arm-qt/include/QtWidgets/qwidget.h \
@@ -6111,7 +6501,66 @@ record.o: record.cpp record.h \
 		../../../arm-qt/include/QtCore/qfiledevice.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
 		../../../arm-qt/include/QtGui/qtouchdevice.h \
-		ui_record.h
+		../../../arm-qt/include/QtSql/QSqlQueryModel \
+		../../../arm-qt/include/QtSql/qsqlquerymodel.h \
+		../../../arm-qt/include/QtSql/qtsqlglobal.h \
+		../../../arm-qt/include/QtSql/qtsql-config.h \
+		../../../arm-qt/include/QtCore/qabstractitemmodel.h \
+		../../../arm-qt/include/QtSql/qsqldatabase.h \
+		ui_record.h \
+		../../../arm-qt/include/QtCore/QVariant \
+		../../../arm-qt/include/QtWidgets/QApplication \
+		../../../arm-qt/include/QtWidgets/qapplication.h \
+		../../../arm-qt/include/QtCore/qcoreapplication.h \
+		../../../arm-qt/include/QtCore/qeventloop.h \
+		../../../arm-qt/include/QtWidgets/qdesktopwidget.h \
+		../../../arm-qt/include/QtGui/qguiapplication.h \
+		../../../arm-qt/include/QtGui/qinputmethod.h \
+		../../../arm-qt/include/QtWidgets/QDateEdit \
+		../../../arm-qt/include/QtWidgets/qdatetimeedit.h \
+		../../../arm-qt/include/QtCore/qdatetime.h \
+		../../../arm-qt/include/QtWidgets/qabstractspinbox.h \
+		../../../arm-qt/include/QtGui/qvalidator.h \
+		../../../arm-qt/include/QtCore/qregularexpression.h \
+		../../../arm-qt/include/QtWidgets/QHBoxLayout \
+		../../../arm-qt/include/QtWidgets/qboxlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../../arm-qt/include/QtWidgets/qgridlayout.h \
+		../../../arm-qt/include/QtWidgets/QHeaderView \
+		../../../arm-qt/include/QtWidgets/qheaderview.h \
+		../../../arm-qt/include/QtWidgets/qabstractitemview.h \
+		../../../arm-qt/include/QtWidgets/qabstractscrollarea.h \
+		../../../arm-qt/include/QtWidgets/qframe.h \
+		../../../arm-qt/include/QtCore/qitemselectionmodel.h \
+		../../../arm-qt/include/QtWidgets/qabstractitemdelegate.h \
+		../../../arm-qt/include/QtWidgets/qstyleoption.h \
+		../../../arm-qt/include/QtGui/qicon.h \
+		../../../arm-qt/include/QtWidgets/qslider.h \
+		../../../arm-qt/include/QtWidgets/qabstractslider.h \
+		../../../arm-qt/include/QtWidgets/qstyle.h \
+		../../../arm-qt/include/QtWidgets/qtabbar.h \
+		../../../arm-qt/include/QtWidgets/qtabwidget.h \
+		../../../arm-qt/include/QtWidgets/qrubberband.h \
+		../../../arm-qt/include/QtWidgets/QLabel \
+		../../../arm-qt/include/QtWidgets/qlabel.h \
+		../../../arm-qt/include/QtWidgets/QLineEdit \
+		../../../arm-qt/include/QtWidgets/qlineedit.h \
+		../../../arm-qt/include/QtGui/qtextcursor.h \
+		../../../arm-qt/include/QtGui/qtextformat.h \
+		../../../arm-qt/include/QtGui/qpen.h \
+		../../../arm-qt/include/QtGui/qtextoption.h \
+		../../../arm-qt/include/QtWidgets/QPushButton \
+		../../../arm-qt/include/QtWidgets/qpushbutton.h \
+		../../../arm-qt/include/QtWidgets/qabstractbutton.h \
+		../../../arm-qt/include/QtWidgets/QTableView \
+		../../../arm-qt/include/QtWidgets/qtableview.h \
+		../../../arm-qt/include/QtWidgets/QVBoxLayout \
+		../../../arm-qt/include/QtSql/QSqlQuery \
+		../../../arm-qt/include/QtSql/qsqlquery.h \
+		../../../arm-qt/include/QtCore/QDebug \
+		../../../arm-qt/include/QtSql/QSqlError \
+		../../../arm-qt/include/QtSql/qsqlerror.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o record.o record.cpp
 
 register.o: register.cpp register.h \
@@ -6938,6 +7387,34 @@ widget_login_page.o: widget_login_page.cpp widget_login_page.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
 		../../../arm-qt/include/QtGui/qtouchdevice.h \
 		ui_widget_login_page.h \
+		../../../arm-qt/include/QtCore/QVariant \
+		../../../arm-qt/include/QtWidgets/QApplication \
+		../../../arm-qt/include/QtWidgets/qapplication.h \
+		../../../arm-qt/include/QtCore/qcoreapplication.h \
+		../../../arm-qt/include/QtCore/qeventloop.h \
+		../../../arm-qt/include/QtWidgets/qdesktopwidget.h \
+		../../../arm-qt/include/QtGui/qguiapplication.h \
+		../../../arm-qt/include/QtGui/qinputmethod.h \
+		../../../arm-qt/include/QtWidgets/QHBoxLayout \
+		../../../arm-qt/include/QtWidgets/qboxlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../../arm-qt/include/QtWidgets/qgridlayout.h \
+		../../../arm-qt/include/QtWidgets/QLabel \
+		../../../arm-qt/include/QtWidgets/qlabel.h \
+		../../../arm-qt/include/QtWidgets/qframe.h \
+		../../../arm-qt/include/QtWidgets/QLineEdit \
+		../../../arm-qt/include/QtWidgets/qlineedit.h \
+		../../../arm-qt/include/QtGui/qtextcursor.h \
+		../../../arm-qt/include/QtGui/qtextformat.h \
+		../../../arm-qt/include/QtGui/qpen.h \
+		../../../arm-qt/include/QtGui/qtextoption.h \
+		../../../arm-qt/include/QtWidgets/QPushButton \
+		../../../arm-qt/include/QtWidgets/qpushbutton.h \
+		../../../arm-qt/include/QtWidgets/qabstractbutton.h \
+		../../../arm-qt/include/QtGui/qicon.h \
+		../../../arm-qt/include/QtWidgets/QSpacerItem \
+		../../../arm-qt/include/QtWidgets/QVBoxLayout \
 		dialog_admin.h \
 		../../../arm-qt/include/QtWidgets/QDialog \
 		../../../arm-qt/include/QtWidgets/qdialog.h \
@@ -7053,7 +7530,30 @@ widget_system.o: widget_system.cpp widget_system.h \
 		../../../arm-qt/include/QtCore/qfiledevice.h \
 		../../../arm-qt/include/QtGui/qvector2d.h \
 		../../../arm-qt/include/QtGui/qtouchdevice.h \
-		ui_widget_system.h
+		ui_widget_system.h \
+		../../../arm-qt/include/QtCore/QVariant \
+		../../../arm-qt/include/QtWidgets/QApplication \
+		../../../arm-qt/include/QtWidgets/qapplication.h \
+		../../../arm-qt/include/QtCore/qcoreapplication.h \
+		../../../arm-qt/include/QtCore/qeventloop.h \
+		../../../arm-qt/include/QtWidgets/qdesktopwidget.h \
+		../../../arm-qt/include/QtGui/qguiapplication.h \
+		../../../arm-qt/include/QtGui/qinputmethod.h \
+		../../../arm-qt/include/QtWidgets/QHBoxLayout \
+		../../../arm-qt/include/QtWidgets/qboxlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayout.h \
+		../../../arm-qt/include/QtWidgets/qlayoutitem.h \
+		../../../arm-qt/include/QtWidgets/qgridlayout.h \
+		../../../arm-qt/include/QtWidgets/QLabel \
+		../../../arm-qt/include/QtWidgets/qlabel.h \
+		../../../arm-qt/include/QtWidgets/qframe.h \
+		../../../arm-qt/include/QtWidgets/QPushButton \
+		../../../arm-qt/include/QtWidgets/qpushbutton.h \
+		../../../arm-qt/include/QtWidgets/qabstractbutton.h \
+		../../../arm-qt/include/QtGui/qicon.h \
+		../../../arm-qt/include/QtWidgets/QVBoxLayout \
+		../../../arm-qt/include/QtCore/QProcess \
+		../../../arm-qt/include/QtCore/qprocess.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget_system.o widget_system.cpp
 
 qrc_img.o: qrc_img.cpp 
@@ -7070,6 +7570,9 @@ moc_faceattendence.o: moc_faceattendence.cpp
 
 moc_form.o: moc_form.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_form.o moc_form.cpp
+
+moc_netonlinechecker.o: moc_netonlinechecker.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_netonlinechecker.o moc_netonlinechecker.cpp
 
 moc_record.o: moc_record.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_record.o moc_record.cpp

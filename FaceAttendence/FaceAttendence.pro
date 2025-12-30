@@ -28,6 +28,7 @@ SOURCES += \
     form.cpp \
     main.cpp \
     faceattendence.cpp \
+    netonlinechecker.cpp \
     record.cpp \
     register.cpp \
     widget_login_page.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     face_api.h \
     faceattendence.h \
     form.h \
+    netonlinechecker.h \
     record.h \
     register.h \
     widget_login_page.h \
