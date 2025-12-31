@@ -24,7 +24,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Dialog
 {
 public:
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QTabWidget *tab_record;
     Register *tab_register;
@@ -37,14 +37,14 @@ public:
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
         Dialog->resize(800, 480);
         Dialog->setStyleSheet(QString::fromUtf8(""));
-        widget = new QWidget(Dialog);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(0, 0, 821, 481));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(Dialog);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 0, 821, 481));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        tab_record = new QTabWidget(widget);
+        tab_record = new QTabWidget(layoutWidget);
         tab_record->setObjectName(QString::fromUtf8("tab_record"));
         tab_register = new Register();
         tab_register->setObjectName(QString::fromUtf8("tab_register"));
@@ -55,7 +55,7 @@ public:
 
         verticalLayout->addWidget(tab_record);
 
-        btn_exit = new QPushButton(widget);
+        btn_exit = new QPushButton(layoutWidget);
         btn_exit->setObjectName(QString::fromUtf8("btn_exit"));
         btn_exit->setMinimumSize(QSize(80, 30));
         btn_exit->setMaximumSize(QSize(70, 30));
@@ -65,7 +65,7 @@ public:
 
         retranslateUi(Dialog);
 
-        tab_record->setCurrentIndex(0);
+        tab_record->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(Dialog);

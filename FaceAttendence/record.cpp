@@ -20,7 +20,7 @@ Record::Record(QWidget *parent) :
                       视图从模型获取数据并显示
     */
     ui->tableView->setModel(model); //注意：当使用这个查询的时候调用model->setQuery成功后，内部会自动更新数据到 ui->tableView
-
+    getRecordByDate(QDate::currentDate());
 
 }
 

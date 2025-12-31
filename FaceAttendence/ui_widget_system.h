@@ -43,20 +43,12 @@ public:
     QHBoxLayout *horizontalLayout_5;
     QLabel *label;
     QLabel *lb_net_status;
-    QWidget *widget2;
-    QHBoxLayout *horizontalLayout_6;
     QLabel *label_4;
     QLabel *lb_cpu_tem;
-    QWidget *widget3;
-    QHBoxLayout *horizontalLayout_7;
     QLabel *label_12;
     QLabel *lb_sensor_tem;
-    QWidget *widget4;
-    QHBoxLayout *horizontalLayout_8;
     QLabel *label_14;
     QLabel *lb_sensor_hum;
-    QWidget *widget5;
-    QHBoxLayout *horizontalLayout_9;
     QLabel *label_16;
     QLabel *lb_sys_date;
 
@@ -186,7 +178,7 @@ public:
 
         widget_status = new QWidget(Widget_System);
         widget_status->setObjectName(QString::fromUtf8("widget_status"));
-        widget_status->setGeometry(QRect(-1, 414, 811, 41));
+        widget_status->setGeometry(QRect(-1, 414, 811, 37));
         widget_status->setMinimumSize(QSize(0, 15));
         widget_status->setStyleSheet(QString::fromUtf8("QLabel{\n"
 "\n"
@@ -195,10 +187,11 @@ public:
 "background-color: rgb(85, 87, 83);"));
         widget1 = new QWidget(widget_status);
         widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(11, 11, 87, 22));
+        widget1->setGeometry(QRect(11, 11, 791, 22));
         horizontalLayout_5 = new QHBoxLayout(widget1);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_5->setSizeConstraint(QLayout::SetDefaultConstraint);
+        horizontalLayout_5->setContentsMargins(0, 0, 20, 0);
         label = new QLabel(widget1);
         label->setObjectName(QString::fromUtf8("label"));
         label->setMinimumSize(QSize(40, 0));
@@ -215,78 +208,55 @@ public:
 
         horizontalLayout_5->addWidget(lb_net_status);
 
-        widget2 = new QWidget(widget_status);
-        widget2->setObjectName(QString::fromUtf8("widget2"));
-        widget2->setGeometry(QRect(135, 11, 78, 22));
-        horizontalLayout_6 = new QHBoxLayout(widget2);
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
-        label_4 = new QLabel(widget2);
+        label_4 = new QLabel(widget1);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setFont(font2);
 
-        horizontalLayout_6->addWidget(label_4);
+        horizontalLayout_5->addWidget(label_4);
 
-        lb_cpu_tem = new QLabel(widget2);
+        lb_cpu_tem = new QLabel(widget1);
         lb_cpu_tem->setObjectName(QString::fromUtf8("lb_cpu_tem"));
         lb_cpu_tem->setFont(font2);
 
-        horizontalLayout_6->addWidget(lb_cpu_tem);
+        horizontalLayout_5->addWidget(lb_cpu_tem);
 
-        widget3 = new QWidget(widget_status);
-        widget3->setObjectName(QString::fromUtf8("widget3"));
-        widget3->setGeometry(QRect(292, 11, 79, 22));
-        horizontalLayout_7 = new QHBoxLayout(widget3);
-        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
-        horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
-        label_12 = new QLabel(widget3);
+        label_12 = new QLabel(widget1);
         label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setFont(font2);
 
-        horizontalLayout_7->addWidget(label_12);
+        horizontalLayout_5->addWidget(label_12);
 
-        lb_sensor_tem = new QLabel(widget3);
+        lb_sensor_tem = new QLabel(widget1);
         lb_sensor_tem->setObjectName(QString::fromUtf8("lb_sensor_tem"));
         lb_sensor_tem->setFont(font2);
 
-        horizontalLayout_7->addWidget(lb_sensor_tem);
+        horizontalLayout_5->addWidget(lb_sensor_tem);
 
-        widget4 = new QWidget(widget_status);
-        widget4->setObjectName(QString::fromUtf8("widget4"));
-        widget4->setGeometry(QRect(448, 11, 79, 22));
-        horizontalLayout_8 = new QHBoxLayout(widget4);
-        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
-        horizontalLayout_8->setContentsMargins(0, 0, 0, 0);
-        label_14 = new QLabel(widget4);
+        label_14 = new QLabel(widget1);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setFont(font2);
 
-        horizontalLayout_8->addWidget(label_14);
+        horizontalLayout_5->addWidget(label_14);
 
-        lb_sensor_hum = new QLabel(widget4);
+        lb_sensor_hum = new QLabel(widget1);
         lb_sensor_hum->setObjectName(QString::fromUtf8("lb_sensor_hum"));
         lb_sensor_hum->setFont(font2);
 
-        horizontalLayout_8->addWidget(lb_sensor_hum);
+        horizontalLayout_5->addWidget(lb_sensor_hum);
 
-        widget5 = new QWidget(widget_status);
-        widget5->setObjectName(QString::fromUtf8("widget5"));
-        widget5->setGeometry(QRect(605, 11, 97, 22));
-        horizontalLayout_9 = new QHBoxLayout(widget5);
-        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
-        horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
-        label_16 = new QLabel(widget5);
+        label_16 = new QLabel(widget1);
         label_16->setObjectName(QString::fromUtf8("label_16"));
+        label_16->setMaximumSize(QSize(70, 16777215));
         label_16->setFont(font2);
 
-        horizontalLayout_9->addWidget(label_16);
+        horizontalLayout_5->addWidget(label_16);
 
-        lb_sys_date = new QLabel(widget5);
+        lb_sys_date = new QLabel(widget1);
         lb_sys_date->setObjectName(QString::fromUtf8("lb_sys_date"));
         lb_sys_date->setFont(font2);
         lb_sys_date->setAutoFillBackground(false);
 
-        horizontalLayout_9->addWidget(lb_sys_date);
+        horizontalLayout_5->addWidget(lb_sys_date);
 
 
         retranslateUi(Widget_System);

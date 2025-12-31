@@ -1,0 +1,20 @@
+#include "dialog_admin.h"
+#include "ui_dialog_admin.h"
+
+Dialog_Admin::Dialog_Admin(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Dialog)
+{
+    ui->setupUi(this);
+} 
+
+Dialog_Admin::~Dialog_Admin()
+{
+    delete ui;
+}
+
+void Dialog_Admin::on_btn_exit_clicked()
+{
+    this->close();
+}
+
