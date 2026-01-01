@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_System_t {
-    QByteArrayData data[9];
-    char stringdata0[104];
+    QByteArrayData data[11];
+    char stringdata0[129];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,12 +39,15 @@ QT_MOC_LITERAL(4, 33, 4), // "temp"
 QT_MOC_LITERAL(5, 38, 23), // "on_btn_poweroff_clicked"
 QT_MOC_LITERAL(6, 62, 22), // "on_btn_restart_clicked"
 QT_MOC_LITERAL(7, 85, 15), // "netStatusUpdate"
-QT_MOC_LITERAL(8, 101, 2) // "ok"
+QT_MOC_LITERAL(8, 101, 2), // "ok"
+QT_MOC_LITERAL(9, 104, 15), // "envStatusUpdate"
+QT_MOC_LITERAL(10, 120, 8) // "humidity"
 
     },
     "Widget_System\0updateStatus\0\0Date\0temp\0"
     "on_btn_poweroff_clicked\0on_btn_restart_clicked\0"
-    "netStatusUpdate\0ok"
+    "netStatusUpdate\0ok\0envStatusUpdate\0"
+    "humidity"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +57,7 @@ static const uint qt_meta_data_Widget_System[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,16 +65,18 @@ static const uint qt_meta_data_Widget_System[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    2,   34,    2, 0x08 /* Private */,
-       5,    0,   39,    2, 0x08 /* Private */,
-       6,    0,   40,    2, 0x08 /* Private */,
-       7,    1,   41,    2, 0x08 /* Private */,
+       1,    2,   39,    2, 0x08 /* Private */,
+       5,    0,   44,    2, 0x08 /* Private */,
+       6,    0,   45,    2, 0x08 /* Private */,
+       7,    1,   46,    2, 0x08 /* Private */,
+       9,    2,   49,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Bool,    8,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,    4,   10,
 
        0        // eod
 };
@@ -86,6 +91,7 @@ void Widget_System::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 1: _t->on_btn_poweroff_clicked(); break;
         case 2: _t->on_btn_restart_clicked(); break;
         case 3: _t->netStatusUpdate((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 4: _t->envStatusUpdate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -120,13 +126,13 @@ int Widget_System::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

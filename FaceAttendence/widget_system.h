@@ -4,6 +4,7 @@
 #include <QWidget>
 class NetOnlineChecker;
 class SystemMonitor;
+class EnvDecter;
 namespace Ui {
 class Widget_System;
 }
@@ -23,11 +24,13 @@ private slots:
 
     void on_btn_restart_clicked();
     void netStatusUpdate(bool ok);
-
+    void envStatusUpdate(QString temp, QString humidity);
 private:
     Ui::Widget_System *ui;
     NetOnlineChecker *netChecker;
     SystemMonitor *monitor;
+    EnvDecter *envDector;
+
 };
 
 #endif // WIDGET_SYSTEM_H

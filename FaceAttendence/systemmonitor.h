@@ -12,7 +12,7 @@ public:
 
 
 signals:
-    void updated(QString time, QString cpuTemp);
+    void updated(QString date, QString cpuTemp);
 
 private:
     QTimer *timer;

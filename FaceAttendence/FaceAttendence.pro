@@ -24,6 +24,7 @@ LIBS += -L/opt/opencv4.5.2-arm/lib -lopencv_world
 SOURCES += \
     databasemannager.cpp \
     dialog_admin.cpp \
+    envdecter.cpp \
     face_api.cpp \
     form.cpp \
     main.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
 HEADERS += \
     databasemannager.h \
     dialog_admin.h \
+    envdecter.h \
     face_api.h \
     faceattendence.h \
     form.h \
