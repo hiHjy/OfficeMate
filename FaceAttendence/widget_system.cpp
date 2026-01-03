@@ -21,35 +21,40 @@ Widget_System::Widget_System(QWidget *parent) :
     connect(monitor, &SystemMonitor::updated, this, &Widget_System::updateStatus);
     //connect(envDector, &EnvDecter::envStatusUpdated, this, &Widget_System::envStatusUpdate);
     //envDector = new EnvDecter();
-
+/*===============================已弃用=======================================*/
     /* 将读取温度移动到线程去执行 */
 
 
-    QThread *t = new QThread(this);
+    //QThread *t = new QThread(this);
 
     //定时器依赖时间循环，moveToThread默认带事件循环，定时器在新的线程生效
-    QTimer *timer = new QTimer();
-    timer->setInterval(PERIOD);
-    timer->moveToThread(t);
+    //QTimer *timer = new QTimer();
+    //timer->setInterval(PERIOD);
+    //timer->moveToThread(t);
 
     //移动到新线程的函数的槽函数会在新的线程执行
-    EnvDecter *decter = new EnvDecter(); //移动到新线程的对象不能有父亲否则会导致移动到新线程失败
-    decter->moveToThread(t);
+  //  EnvDecter *decter = new EnvDecter(); //移动到新线程的对象不能有父亲否则会导致移动到新线程失败
+   // decter->moveToThread(t);
 
 
-    //执行新的线程中的EnvDecter的槽函数
-    connect(timer, &QTimer::timeout, decter, &EnvDecter::readEnvStatus);
+//    //执行新的线程中的EnvDecter的槽函数
+//    connect(timer, &QTimer::timeout, decter, &EnvDecter::readEnvStatus);
 
-    //QvOerload<>::of(&QTimer::start) 当要用的槽函数有重载的时候就用这个QvOerload<重载的参数列表或无>::of(&类名::槽函数名)
-    connect(t, &QThread::started, timer, QOverload<>::of(&QTimer::start));
-    connect(decter, &EnvDecter::envStatusUpdated, this, &Widget_System::envStatusUpdate);
+//    //QvOerload<>::of(&QTimer::start) 当要用的槽函数有重载的时候就用这个QvOerload<重载的参数列表或无>::of(&类名::槽函数名)
+//    connect(t, &QThread::started, timer, QOverload<>::of(&QTimer::start));
+//    connect(decter, &EnvDecter::envStatusUpdated, this, &Widget_System::envStatusUpdate);
 
 
 
     //由于移动到新线程的对象不能有父亲，所以不会被自动回收，所以必须连接个信号与槽去回收对象
-    connect(t, &QThread::finished, timer, &QTimer::deleteLater);
-    connect(t, &QThread::finished, decter, &EnvDecter::deleteLater);
-    t->start();
+//    connect(t, &QThread::finished, timer, &QTimer::deleteLater);
+//    connect(t, &QThread::finished, decter, &EnvDecter::deleteLater);
+//    t->start();
+/*=====================================================================================*/
+    /*不需要挪到线程去执行了以上不要了*/
+    envDector = new EnvDecter(this);
+    connect(envDector, &EnvDecter::envStatusUpdated, this, &Widget_System::envStatusUpdate);
+
 
 }
 

@@ -51,10 +51,5 @@ void Widget_Login_Page::on_pushButton_clicked()
     }
 
 
-
-
-
-
-
 }
 

@@ -2,7 +2,7 @@
 #define ENVDECT_H
 #include <QFile>
 #include <QObject>
-
+#include <QLocalSocket>
 class EnvDecter : public QObject
 {
     Q_OBJECT
@@ -16,7 +16,9 @@ signals:
 public slots:
 void readEnvStatus();
 
-
+private:
+    QLocalSocket *socket;
+    QByteArray  rx;
 
 
 
