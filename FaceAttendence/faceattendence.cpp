@@ -224,7 +224,6 @@ void FaceAttendence::workThreadConnection()
 
 
 
-
     qDebug() << "连接信号和槽函数";
 
 
@@ -365,12 +364,14 @@ void Work::run()
                      <<"file:"  << __FILE__
                     << "work_frame empty";
         }
-
+        quint64 t1 = QDateTime::currentMSecsSinceEpoch();
         cv::cvtColor(work_frame, gray, cv::COLOR_BGR2GRAY);
+        qDebug() << "cvtColor time:" << QDateTime::currentDateTime() - t1;
+
 
         // --- 2) Haar 人脸检测 ---
         std::vector<cv::Rect> faces;
-
+        t1 = QDateTime::currentMSecsSinceEpoch();
         this->cascade->detectMultiScale(gray,
                                         faces,
                                         1.2,        // scaleFactor
@@ -379,6 +380,7 @@ void Work::run()
                                         cv::Size(60, 60),   // minSize
                                         cv::Size()          // maxSize
                                         );
+       qDebug() << "detectMultiScale time:" << QDateTime::currentDateTime() - t1;
 
         Rect rect;
         if (faces.empty() ) {
@@ -431,13 +433,20 @@ void Work::run()
 //        counter++;
 
         std::vector<uchar> buf;
+        t1 = QDateTime::currentMSecsSinceEpoch();
         cv::imencode(".jpg", work_frame, buf);
+        qDebug() << "imencode time:" << QDateTime::currentDateTime() - t1;
+
 
         /* jpg转为base64 */
 
         QByteArray jpgData(reinterpret_cast<const char*>(buf.data()), buf.size());
+        t1 = QDateTime::currentMSecsSinceEpoch();
         QString jpgBase64 = jpgData.toBase64();
-        qDebug() << "Base64 长度：" << jpgBase64.length();
+        qDebug() << "imencode time:" << QDateTime::currentDateTime() - t1;
+
+        qDebug() << "toBase64 长度：" << jpgBase64.length();
+
         //faceSearch(jpgBase64, global_token);
         emit sigFaceReady(jpgBase64, work_frame);
         FaceAttendence::getInstance()->detectionSuccess = false;
